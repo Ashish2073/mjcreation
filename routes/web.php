@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\auth\RegistrationControllers;
-
-
+use App\Http\Controllers\User\Auth\RegistrationControllers;
+ 
+ 
 
 
 
@@ -15,7 +15,9 @@ Route::get('/', function () {
 
 Route::post('users/registration',[RegistrationControllers::class,'register'])->name('users-registration');
 
-// Route::get('users/verification',[RegistrationControllers::class,'verification']);
+Route::get('users/verification',[RegistrationControllers::class,'verificationview']);
+
+Route::post('users/otpverification',[RegistrationControllers::class,'verifiedOtp'])->name('user-otpverification');
 
 
 
