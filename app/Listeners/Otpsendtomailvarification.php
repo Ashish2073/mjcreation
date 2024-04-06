@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\Sendemailvarificationotp;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Carbon;
 use App\Models\User;
 
 class Otpsendtomailvarification
@@ -22,12 +23,12 @@ class Otpsendtomailvarification
      */
     public function handle(Sendemailvarificationotp $event): void
     {
-        $user=$event->userdata;
+        $user=$event->userdata; 
         $userotp=$event->userotp;
 
-       User::where('email',$user->email)->update([
+       User::where('id',$user->id)->update([
         'otp'=> $userotp,
-        'otp_created_at'=>time(),
+        'otp_created_at'=>Carbon::now(),
        ]);
     }
 }
