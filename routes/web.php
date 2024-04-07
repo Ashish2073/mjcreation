@@ -19,5 +19,5 @@ Route::get('users/verification',[RegistrationControllers::class,'verificationvie
 
 Route::post('users/otpverification',[RegistrationControllers::class,'verifiedOtp'])->name('user-otpverification');
 
-
+Route::post('users/otpresend',[RegistrationControllers::class,'otpresend'])->name('user-otpresend');
 
