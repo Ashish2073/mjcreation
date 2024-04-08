@@ -32,19 +32,20 @@ class RegistrationControllers extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'phone_number' => 'sometimes|string|max:255|unique:users,phone_no',
-            'email' => 'sometimes|string|email|max:255|unique:users,email',
+            'phone_number' => 'sometimes|required|string|max:255|unique:users,phone_no',
+            'email' => 'sometimes|required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8',
-            'phone_number' => 'required_without:email',
-            'email' => 'required_without:phone_number',
+            'user_contact'=>'required',
+
         ]);
 
 
 
         if ($validator->fails()) {
-            return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
+            return response()->json([
+                'sucess'=>true,
+                'errormessage'=>$validator->errors(),
+            ],422);
         }
 
 
@@ -71,7 +72,7 @@ class RegistrationControllers extends Controller
             'responsehtml'=>$responsehtml
         ],200);
 
-    } 
+    }
 
 
 
