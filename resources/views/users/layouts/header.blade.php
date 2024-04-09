@@ -27,7 +27,7 @@
                             <span><i class="fa fa-linkedin"></i></span>
                         </div>
                         <div>
-                            Login/Signup
+                            <a href="{{ route('users-login') }}" style="color:white">Login</a>/Signup
                         </div>
                     </div>
                 </div>

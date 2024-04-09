@@ -17,17 +17,19 @@ class RegistrationControllers extends Controller
 {
 
     public function register(Request $request){
-        $emailPattern = '/^[a-zA-Z0-9._%+-]+@gmail\.com$/';
-        $phoneNumberPattern='/^[6-9]\d{9}$/';
+        // $emailPattern = '/^[a-zA-Z0-9._%+-]+@gmail\.com$/';
+        // $phoneNumberPattern='/^[6-9]\d{9}$/';
 
 
-        if(preg_match($emailPattern,$request->user_contact)){
-            $request->merge(['email' => $request->user_contact]);
-        }
+        // if(preg_match($emailPattern,$request->user_contact)){
+        //     $request->merge(['email' => $request->user_contact]);
+        // }
 
-        if(preg_match($phoneNumberPattern,$request->user_contact)){
-            $request->merge(['phone_number' => $request->user_contact]);
-        }
+        // if(preg_match($phoneNumberPattern,$request->user_contact)){
+        //     $request->merge(['phone_number' => $request->user_contact]);
+        // }
+
+        mergerequestoremail($request);
 
 
 
@@ -35,7 +37,7 @@ class RegistrationControllers extends Controller
             'phone_number' => 'sometimes|required|string|max:255|unique:users,phone_no',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8',
-            'user_contact'=>'required',
+            'user_contact'=>'required', 
 
         ]);
 
@@ -57,6 +59,7 @@ class RegistrationControllers extends Controller
         ]);
         if(isset($request->email)){
             $otp = rand(100000,999999);
+        
             event(new Sendemailvarificationotp($otp,$userData));
 
 

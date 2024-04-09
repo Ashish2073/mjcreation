@@ -212,14 +212,28 @@
                             By continuing, you agree to Flipkart's Terms of Use and Privacy
                             Policy.
                         </p>
-                        <div class="s-box">
-                            <div>
-                                <button type="submit" class="btn sbt-btn" id="otpsubmitbutton">
-                                    Request to OTP
-                                </button>
-                                <p class="text-center"><b>Not received your code?</b></p>
+
+                        @if (Request::segment(2) == 'login')
+                            <div class="s-box">
+
+                                <div>
+                                    <button type="submit" class="btn sbt-btn" id="loginbutton">
+                                        Login
+                                    </button>
+
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="s-box">
+
+                                <div>
+                                    <button type="submit" class="btn sbt-btn" id="otpsubmitbutton">
+                                        Request to OTP
+                                    </button>
+                                    <p class="text-center"><b>Not received your code?</b></p>
+                                </div>
+                            </div>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -231,21 +245,21 @@
         $(document).ready(function() {
 
             toastr.options = {
-				'closeButton': true,
-				'debug': false,
-				'newestOnTop': false,
-				'progressBar': false,
-				'positionClass': 'toast-top-right',
-				'preventDuplicates': false,
-				'showDuration': '1000',
-				'hideDuration': '1000',
-				'timeOut': '5000',
-				'extendedTimeOut': '1000',
-				'showEasing': 'swing',
-				'hideEasing': 'linear',
-				'showMethod': 'fadeIn',
-				'hideMethod': 'fadeOut',
-			}
+                'closeButton': true,
+                'debug': false,
+                'newestOnTop': false,
+                'progressBar': false,
+                'positionClass': 'toast-top-right',
+                'preventDuplicates': false,
+                'showDuration': '1000',
+                'hideDuration': '1000',
+                'timeOut': '5000',
+                'extendedTimeOut': '1000',
+                'showEasing': 'swing',
+                'hideEasing': 'linear',
+                'showMethod': 'fadeIn',
+                'hideMethod': 'fadeOut',
+            }
 
 
 
@@ -480,12 +494,74 @@
                     },
                     error: (error) => {
 
-                    console.log(error);
-                    toastr.error('You clicked Warning Toast');
+
+                        toastr.error(error.responseJSON.errormessage.email[0]);
+                        $('#loader').html('');
+                        $('#main_content').removeAttr('class', 'demo');
 
                     }
 
                 })
+
+            })
+
+
+            $('#loginbutton').on('click', function(e) {
+                e.preventDefault();
+                let userContact = $('#user_contact').val();
+                let password = $('#userpassword').val();
+                $.ajax({
+                    url: "{{ route('users-auth-login') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        user_contact: userContact,
+                        password: password,
+                    },
+                    beforeSend: function() {
+
+                        $('#loader').html('<div></div>');
+
+                        $('#main_content').attr('class', 'demo');
+
+                    },
+                    success: (data) => {
+
+
+
+
+
+
+
+                    },
+                    error: (xhr, status, error) => {
+
+
+                        if (xhr.status == 422) {
+
+                            toastr.error(
+                                "Your account is not verified ,otp is send to your registered mail"
+                                );
+                            $('#loader').html('');
+                            $('#main_content').removeAttr('class', 'demo');
+                            $('#main_content').html(error.responseJSON.responsehtml);
+                            otpFieldScript();
+                            otpLifeTime();
+                            otpvarification();
+
+                        }
+                        if (xhr.status == 401) {
+
+                            $('#loader').html('');
+                            $('#main_content').removeAttr('class', 'demo');
+                            toastr.error("Your are not authorized person");
+                        }
+
+
+                    }
+
+                })
+
 
             })
 
