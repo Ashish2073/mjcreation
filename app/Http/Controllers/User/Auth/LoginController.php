@@ -18,7 +18,6 @@ class LoginController extends Controller
 
     public function usersauthlogin(Request $request){
 
-
         mergerequestoremail($request);
     
         $validator = \Validator::make($request->all(), [
@@ -39,6 +38,7 @@ class LoginController extends Controller
             ],
         ]);
 
+    
         $userData = User::where('email', $request->user_contact)->orWhere('phone_no', $request->user_contact)->first();
         if($userData->is_verified=='0'){
         
@@ -46,9 +46,7 @@ class LoginController extends Controller
             if(isset($request->email)){
                 $otp = rand(100000,999999);
                 event(new Sendemailvarificationotp($otp,$userData));
-    
-    
-    
+
             }
 
         }

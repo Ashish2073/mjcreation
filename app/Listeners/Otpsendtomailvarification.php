@@ -26,6 +26,8 @@ class Otpsendtomailvarification
         $user=$event->userdata; 
         $userotp=$event->userotp;
 
+
+
        User::where('id',$user->id)->update([
         'otp'=> $userotp,
         'otp_created_at'=>Carbon::now(),

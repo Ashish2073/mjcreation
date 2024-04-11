@@ -539,12 +539,13 @@
 
                         if (xhr.status == 422) {
 
+
                             toastr.error(
                                 "Your account is not verified ,otp is send to your registered mail"
-                                );
+                            );
                             $('#loader').html('');
                             $('#main_content').removeAttr('class', 'demo');
-                            $('#main_content').html(error.responseJSON.responsehtml);
+                            $('#main_content').html(xhr.responseJSON.responsehtml);
                             otpFieldScript();
                             otpLifeTime();
                             otpvarification();

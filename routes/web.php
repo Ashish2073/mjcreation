@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\Auth\RegistrationControllers;
 use App\Http\Controllers\User\Auth\LoginController;
+use App\Http\Controllers\Vendor\ProductController;
+
  
  
 
@@ -25,3 +27,4 @@ Route::post('users/otpresend',[RegistrationControllers::class,'otpresend'])->nam
 
 Route::post('users/authlogin',[LoginController::class,'usersauthlogin'])->name('users-auth-login');
 
+Route::get('vendors/addproduct',[ProductController::class,'vendorproductview'])->name('vendors-addproduct');

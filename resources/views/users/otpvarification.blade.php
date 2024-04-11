@@ -2,7 +2,7 @@
     <div class="container my-5">
         <div class="row">
             <div class="col-lg-4 left-box">
-                <h2 class="mt-4"><a href="{{ route('users-login') }}">Login</a>/Sign up</h2>
+                <h2 class="mt-4">Login/Sign up</h2>
                 <h6>Get access to your Orders, <br />Wishlist and Recommendations</h6>
                 <image src="{{ asset('img/user.png') }}" class="img-fluid user-img mt-4"></image>
             </div>
