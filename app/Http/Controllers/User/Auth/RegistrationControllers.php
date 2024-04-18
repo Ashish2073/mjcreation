@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Events\Sendemailvarificationotp;
+use App\Events\Sendphonevarificationotp;
 use Twilio\Rest\Client;
 use App\Models\User;
 use app\smsvarification;
@@ -17,24 +18,14 @@ class RegistrationControllers extends Controller
 {
 
     public function register(Request $request){
-        // $emailPattern = '/^[a-zA-Z0-9._%+-]+@gmail\.com$/';
-        // $phoneNumberPattern='/^[6-9]\d{9}$/';
+      
 
-
-        // if(preg_match($emailPattern,$request->user_contact)){
-        //     $request->merge(['email' => $request->user_contact]);
-        // }
-
-        // if(preg_match($phoneNumberPattern,$request->user_contact)){
-        //     $request->merge(['phone_number' => $request->user_contact]);
-        // }
-
-        mergerequestoremail($request);
+        mergerequestoremailorphone_no($request);
 
 
 
         $validator = Validator::make($request->all(), [
-            'phone_number' => 'sometimes|required|string|max:255|unique:users,phone_no',
+            'phone_no' => 'sometimes|required|string|max:255|unique:users,phone_no',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8',
             'user_contact'=>'required', 
@@ -50,15 +41,20 @@ class RegistrationControllers extends Controller
             ],422);
         }
 
+    
 
         $userData=User::create([
 
             'email' => $request->email??Null,
-            'phone_no'=>$request->phone_no??Null,
+            'phone_no'=>$request->phone_no ?? NULL,
             'password' => Hash::make($request->password),
         ]);
+
+
         if(isset($request->email)){
             $otp = rand(100000,999999);
+
+           
         
             event(new Sendemailvarificationotp($otp,$userData));
 
@@ -66,9 +62,21 @@ class RegistrationControllers extends Controller
 
         }
 
+        if(isset($request->phone_no)){
+
+            $otp = rand(100000,999999);
+
+           
+        
+            event(new Sendphonevarificationotp($otp,$userData));
+
+        }
+
+
+
 
         $responsehtml=view::make('users.otpvarification',['user_contact'=>$request->user_contact,'user_id'=>$userData->id])->render();
-        // $request->session()->flash('user_contact', $request->user_contact);
+      
 
         return response()->json([
             'sucess'=>true,
@@ -89,6 +97,8 @@ class RegistrationControllers extends Controller
     public function verifiedOtp(Request $request)
     {
 
+        mergerequestoremailorphone_no($request);
+
         $otp1 = $request->input('otp1');
         $otp2 = $request->input('otp2');
         $otp3 = $request->input('otp3');
@@ -107,15 +117,25 @@ class RegistrationControllers extends Controller
         }
         else{
 
+
             $currentTime = Carbon::now();
             $otpCreatedAt = Carbon::parse($userOtp->created_at);
             $differenceInSeconds = $currentTime->diffInSeconds($otpCreatedAt);
 
             if($currentTime->greaterThanOrEqualTo($otpCreatedAt) && $differenceInSeconds<=120){
+
+            if($request->email){
                 User::where('id',$userOtp->id)->update([
                     'is_verified' => '1',
                     'email_verified_at'=> Carbon::now()
                 ]);
+            }elseif($request->phone_no){
+                User::where('id',$userOtp->id)->update([
+                    'is_verified' => '1',
+                    'phone_verified_at'=> Carbon::now()
+                ]);
+
+            }
                 return response()->json(['success' => true,'msg'=> 'Mail has been verified']);
             }
             else{
@@ -137,7 +157,7 @@ class RegistrationControllers extends Controller
         }
 
         if(preg_match($phoneNumberPattern,$request->user_contact)){
-            $request->merge(['phone_number' => $request->user_contact]);
+            $request->merge(['phone_no' => $request->user_contact]);
         }
 
         $userData=User::where('id',$request->user_id)->first();
@@ -147,6 +167,12 @@ class RegistrationControllers extends Controller
             event(new Sendemailvarificationotp($otp,$userData));
 
 
+
+        }
+
+        if(isset($request->phone_no)){
+            $otp = rand(100000,999999);
+            event(new Sendphonevarificationotp($otp,$userData));
 
         }
 

@@ -197,6 +197,28 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
+
+
+
+                        <!-- form -->
+                        <div class="form-group">
+                            <label for="login-mobile" class="font-weight-bold text-dark">Mobile</label>
+                            <div class="input-group input-group-sm">
+                                <input id="mobile" type="tel" name="mobile" class="form-control" autofocus required
+                                    style="width:500px;">
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
                         <br />
                         <div class="form-group">
                             <label for="userpassword"><b>Enter Your Password</b></label>
@@ -353,6 +375,7 @@
                         let otp5 = $('#otp5').val();
                         let otp6 = $('#otp6').val();
                         let user_id = $('#user_id').val();
+                        let user_contact = $("#user_contact").val();
 
                         $.ajax({
                             url: "{{ route('user-otpverification') }}",
@@ -365,7 +388,8 @@
                                 otp4: otp4,
                                 otp5: otp5,
                                 otp6: otp6,
-                                user_id: user_id
+                                user_id: user_id,
+                                user_contact: user_contact;
                             },
                             beforeSend: function() {
 
@@ -541,7 +565,7 @@
 
 
                             toastr.error(
-                                "Your account is not verified ,otp is send to your registered mail"
+                                "Your account is not verified ,otp is send to your registered contact details"
                             );
                             $('#loader').html('');
                             $('#main_content').removeAttr('class', 'demo');

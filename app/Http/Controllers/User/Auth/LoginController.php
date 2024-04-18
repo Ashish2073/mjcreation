@@ -4,7 +4,8 @@ namespace App\Http\Controllers\User\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Events\Sendemailvarificationotp;
-use Illuminate\Support\Facades\Validator;
+use App\Events\Sendphonevarificationotp;
+use Illuminate\Support\Facades\Validator; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Models\User;
@@ -18,7 +19,7 @@ class LoginController extends Controller
 
     public function usersauthlogin(Request $request){
 
-        mergerequestoremail($request);
+        mergerequestoremailorphone_no($request);
     
         $validator = \Validator::make($request->all(), [
             'password' => ['required', 'string', 'min:8'],
@@ -46,6 +47,12 @@ class LoginController extends Controller
             if(isset($request->email)){
                 $otp = rand(100000,999999);
                 event(new Sendemailvarificationotp($otp,$userData));
+
+            }
+
+            if(isset($request->phone_no)){
+                $otp = rand(100000,999999);
+                event(new Sendphonevarificationotp($otp,$userData));
 
             }
 

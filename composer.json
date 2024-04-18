@@ -12,6 +12,7 @@
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
+        "symfony/polyfill-iconv": "^1.29",
         "twilio/sdk": "^7.16"
     },
     "require-dev": {

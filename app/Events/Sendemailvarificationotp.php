@@ -27,8 +27,6 @@ class Sendemailvarificationotp
         $this->userdata=$data;
         $this->userotp=$otp;
 
-        
-
         Mail::to($this->userdata->email)->send(new Otpsendformetmail($this->userotp));
 
 
