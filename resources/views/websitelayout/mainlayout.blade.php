@@ -18,6 +18,7 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/jquery.validation.min.js') }}"></script>
+    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
     <script src="{{ asset('js/toaster.min.js') }}"></script>
     <script src="{{ Vite::asset('resources/js/app.js') }} "></script>
 

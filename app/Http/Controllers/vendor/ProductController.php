@@ -30,9 +30,9 @@ class ProductController extends Controller
       
 
              if(json_decode($product_category)!=[]){
-                $optionHtml = "<option selected>Open this select menu</option>";
+                $optionHtml = "<option selected disabled>Open this select menu</option>";
              }else{
-                $optionHtml = "<option selected>No Record Found</option>";
+                $optionHtml = "<option selected disabled>No Record Found</option>";
              }
         
 
@@ -47,7 +47,7 @@ class ProductController extends Controller
             $htmlResponse = '<div class="col-md-4" id="'.$request->selectedtext.'">
             <label for="" class="form-label"> '.$request->selectedtext.' '. 'Category</label>
             <select onchange="selectSubproductcategory(this)"  class="form-select"
-                name="product_category[]" aria-label="Default select example">'
+                name="product_category[][]" aria-label="Default select example">'
     
                .$optionHtml.
                 '</select>
@@ -60,6 +60,30 @@ class ProductController extends Controller
                 ],200);
         
        
+    }
+
+
+    public function saveproduct(Request $request){
+
+        dd($request);
+
+    }
+
+    public function textareaimageupload(Request $request){
+        if($request->hasFile('upload')){
+            $originName=$request->file('upload')->getClientOriginalName();
+            $fileName=pathinfo($originName,PATHINFO_FILENAME);
+            $extension=$request->file('upload')->getClientOriginalExtension();
+            $fileName=$fileName.'__'.time().'.'.$extension;
+            $request->file('upload')->move(public_path('textarea'),$fileName);
+            $url=asset('textarea/'.$fileName);
+            return response()->json([
+                'fileName'=>$fileName,
+                'uploaded'=>1,
+                'url'=>$url,
+            ]);
+
+        }
     }
 
 

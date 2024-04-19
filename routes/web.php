@@ -39,3 +39,7 @@ Route::post('users/authlogin',[LoginController::class,'usersauthlogin'])->name('
 Route::get('vendors/addproduct',[ProductController::class,'vendorproductview'])->name('vendors-addproduct');
 
 Route::post('vendors/subproduct-categories',[ProductController::class,'handleChange'])->name('vendors-subproduct-categories');
+
+Route::post('vendors/saveproduct',[ProductController::class,'saveproduct'])->name('vendor-saveproduct');
+
+Route::post('vendors/product-textarea-image-upload',[ProductController::class,'textareaimageupload'])->name('product-textarea-image-upload');
