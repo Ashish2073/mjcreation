@@ -79,8 +79,8 @@
                     <div class="row" id="productcategoryelement">
                         <div class="col-md-4" id="main_product_category">
                             <label for="" class="form-label">Category</label>
-                            <select name="product_category[0][]" onchange="selectSubproductcategory(this)"
-                                class="form-select" aria-label="Default select example">
+                            <select name="product_category[]" onchange="selectSubproductcategory(this)" class="form-select"
+                                aria-label="Default select example">
 
                                 <option selected disabled>Open this select menu</option>
                                 @foreach ($product_category as $data)
@@ -112,7 +112,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="" class="form-label">Title</label>
-                            <input type="text" name="product_title[0][]" class="form-control" id="inputEmail4"
+                            <input type="text" name="product_title" class="form-control" id="inputEmail4"
                                 autocomplete="off">
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="" class="form-label">Brand Name</label>
-                            <select name="product_brandid[0][]" class="form-select" aria-label="Default select example">
+                            <select name="product_brandid" class="form-select" aria-label="Default select example">
 
 
                                 <option selected disabled>Open this select menu</option>
@@ -141,16 +141,16 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="" class="form-label">Product Quantity</label>
-                            <input type="number" name="product_quantity[0][]" class="form-control" id="inputEmail4"
+                            <input type="number" name="product_quantity" class="form-control" id="inputEmail4"
                                 autocomplete="off">
                         </div>
                     </div>
 
                 </div>
                 <div class="col-md-12">
-                    <label for="" class="form-label">Discription</label>
+                    <label for="product_desc" class="form-label">Discription</label>
                     <div class="form-floating">
-                        <textarea class="form-control editor" name="product_dec[0][]" placeholder="Leave a comment here" id=""
+                        <textarea class="form-control" id="product_desc" name="product_desc" placeholder="Leave a comment here"
                             style="height: 100px"></textarea>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter</label>
-                            <select id="inputState" name="product_mesurment_paraeter[0][]" class="form-select">
+                            <select id="inputState" name="product_mesurment_parameter" class="form-select">
                                 <option selected disabled> Please Select Parameter</option>
                                 <option value="length">Length</option>
                                 <option value="weight">Weight</option>
@@ -175,7 +175,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter Unit</label>
-                            <select id="inputState" name="product_mesurment_unit[]" class="form-select">
+                            <select id="inputState" name="product_mesurment_unit" class="form-select">
                                 <option selected disabled> Unit</option>
                                 <option value="m">Meter</option>
                                 <option value="gm">Gm</option>
@@ -193,19 +193,20 @@
 
                                 <div class="row">
                                     <div class="col-md-3 py-3">
-                                        <label for="inputAddress" name="product_mesurment_quantity[0][]"
-                                            class="form-label">Product
+                                        <label for="inputAddress" id="product_mesurment_quantity" class="form-label">Product
                                             Measurment Quantity</label>
-                                        <input type="number" class="form-control" id="" autocomplete="off">
+                                        <input type="number" name="product_mesurment_quantity[]" class="form-control"
+                                            id="product_mesurment_quantity" autocomplete="off">
                                     </div>
                                     <div class="col-md-3 py-3">
-                                        <label for="inputAddress" name="product_quantity_price[0][]"
+                                        <label for="inputAddress" id="product_mesurment_quantity"
                                             class="form-label">Price(MRP)</label>
-                                        <input type="number" class="form-control" id="" autocomplete="off">
+                                        <input type="number" name="product_quantity_price[]" class="form-control"
+                                            id="" autocomplete="off">
                                     </div>
                                     <div class="col-md-3 py-3">
                                         <label for="inputcurrency" class="form-label">Currency Type</label>
-                                        <select id="inputcurrency" name="product_currency_type[0][]" class="form-select">
+                                        <select id="inputcurrency" name="product_currency_type[]" class="form-select">
                                             <option selected disabled> Unit</option>
                                             <option value="inr">INR</option>
                                             <option value="usd">USD</option>
@@ -228,19 +229,19 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 px-5">
-                            <label for="inputAddress" name="product_other_expenditure[0][]"
-                                class="form-label">Name</label>
+                            <label for="inputAddress" name="product_other_expenditure[]" class="form-label">Name</label>
                             <input type="text" class="form-control" id="" autocomplete="off">
                         </div>
                         <div class="col-md-3 px-5">
                             <label for="inputAddress" class="form-label">Price</label>
-                            <input type="text" class="form-control" name="product_other_price[0][]" id=""
+                            <input type="text" class="form-control" name="product_other_price[]" id=""
                                 autocomplete="off">
                         </div>
 
                         <div class="col-md-3 px-5">
                             <label for="inputAddress" class="form-label">Currency Type</label>
-                            <select id="inputcurrency" name="product_other_currency_type[0][]" class="form-select">
+                            <select id="inputcurrency" name="product_other_expenditure_currency_type[]"
+                                class="form-select">
                                 <option selected disabled> Unit</option>
                                 <option value="inr">INR</option>
                                 <option value="usd">USD</option>
@@ -249,9 +250,9 @@
                         </div>
 
                         <div class="col-md-9 px-5">
-                            <label for="inputAddress" class="form-label">Reason</label>
+                            <label for="product_other_expenditure_resaon" class="form-label">Reason</label>
                             <div class="form-floating">
-                                <textarea class="form-control " name="product_other_expenditure_resaon[0][]" placeholder="Leave a comment here"
+                                <textarea class="form-control " name="product_other_expenditure_resaon[]" placeholder="Leave a comment here"
                                     id="product_other_expenditure_resaon" style="height: 100px"></textarea>
                             </div>
                         </div>
@@ -268,19 +269,19 @@
                 <h4 class="mt-5">Specification</h4>
                 <div class="col-md-12 card py-4" id="productspecfictaioncontainer">
                     <div class="col-md-12 px-5 d-flex justify-content-end">
-                        <span class="btn btn-success btn-sm px-3" onclick="addMoreProductSpecfiction()">+</span>
+                        <span class="btn btn-success btn-sm px-3" onclick="addMoreProductspecification()">+</span>
                     </div>
                     <div class="row">
                         <div class="col-md-3 px-5">
                             <label for="product_specfication" class="form-label">Name</label>
-                            <input type="text" name="product_specfiction[0][]" class="form-control"
+                            <input type="text" name="product_specification[]" class="form-control"
                                 id="product_specfication" autocomplete="off">
                         </div>
                         <div class="col-md-9 px-5">
-                            <label for="product_specfiction_details" class="form-label">Detail</label>
+                            <label for="product_specification_details" class="form-label">Detail</label>
                             <div class="form-floating">
-                                <textarea class="form-control" name="product_specfiction_details[0][]" placeholder="Leave a comment here"
-                                    id="product_specfiction_details" style="height: 100px"></textarea>
+                                <textarea class="form-control" name="product_specification_details[]" placeholder="Leave a comment here"
+                                    id="product_specification_details" style="height: 100px"></textarea>
 
                             </div>
 
@@ -302,32 +303,32 @@
                     <div class="row">
                         <div class="col-md-3 px-5">
                             <label for="discountname" class="form-label">Name</label>
-                            <input type="text" id="discountname" class="form-control"
-                                name="product_discount_detail_name[0][]" autocomplete="off">
+                            <input type="text" id="discountname" class="form-control" name="product_discount_name[]"
+                                autocomplete="off">
                         </div>
 
                         <div class="col-md-3 px-5">
                             <label for="discountpercentage" class="form-label">Amount(in percentage)</label>
                             <input type="text" id="discountpercentage" class="form-control"
-                                name="product_discount_percentage[0][]" autocomplete="off">
+                                name="product_discount_percentage[]" autocomplete="off">
                         </div>
 
 
                         <div class="col-md-3 px-5">
                             <label for="product_discount_start_date" class="form-label">start Date</label>
-                            <input type="date" class="form-control" name="product_discount_start_date[0][]"
+                            <input type="date" class="form-control" name="product_discount_start_date[]"
                                 id="product_discount_start_date" autocomplete="off">
                         </div>
                         <div class="col-md-3 px-5">
                             <label for="product_discount_end_date" class="form-label">End Date</label>
-                            <input type="date" class="form-control" name="product_discount_end_date[0][]"
+                            <input type="date" class="form-control" name="product_discount_end_date[]"
                                 id="product_discount_end_date" autocomplete="off">
                         </div>
 
                         <div class="col-md-9 px-5">
                             <label for="product_discount_detail" class="form-label">Deatls</label>
                             <div class="form-floating">
-                                <textarea class="form-control" name="product_discount_detail[0][]" placeholder="Leave a comment here"
+                                <textarea class="form-control" name="product_discount_detail[]" placeholder="Leave a comment here"
                                     id="product_discount_detail" style="height: 100px"></textarea>
                             </div>
                         </div>
@@ -348,8 +349,7 @@
 
                             <div class="grid">
                                 <div class="form-element" onclick=" previewBeforeUpload('file-banner')">
-                                    <input type="file" name="product_banner_image[0][]" id="file-banner"
-                                        accept="image/*">
+                                    <input type="file" name="product_banner_image" id="file-banner" accept="image/*">
                                     <label for="file-banner" id="file-banner-preview">
                                         <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
                                         <div>
@@ -379,7 +379,7 @@
 
                                 <div class="grid" id="product_gallery">
                                     <div class="form-element" onclick="previewBeforeUpload('file-1')">
-                                        <input type="file" name="product_image_gallery[0][]" id="file-1"
+                                        <input type="file" name="product_image_gallery[]" id="file-1"
                                             accept="image/*">
                                         <label for="file-1" id="file-1-preview">
                                             <img src="{{ asset('img/imagepreviewupload.jpg') }}">
@@ -453,12 +453,22 @@
 
 
 
+                let product_desc;
+                ClassicEditor
+                    .create(document.querySelector('#product_desc'), {
+                        ckfinder: {
+                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
+                        }
+                    })
+                    .then(newEditor => {
+                        product_desc = newEditor;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
 
-                // ClassicEditor
-                //     .create(document.querySelector('#product_other_expenditure_resaon'))
-                //     .catch(error => {
-                //         console.error(error);
-                //     });
+
+
 
                 let product_other_expenditure_resaon;
                 ClassicEditor
@@ -478,7 +488,11 @@
                 let product_discount_detail;
 
                 ClassicEditor
-                    .create(document.querySelector('#product_discount_detail'))
+                    .create(document.querySelector('#product_discount_detail'), {
+                        ckfinder: {
+                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
+                        }
+                    })
                     .then(newEditor => {
                         product_discount_detail = newEditor;
                     })
@@ -486,11 +500,15 @@
                         console.error(error);
                     });
 
-                let product_specfiction_details;
+                let product_specification_details;
                 ClassicEditor
-                    .create(document.querySelector('#product_specfiction_details'))
+                    .create(document.querySelector('#product_specification_details'), {
+                        ckfinder: {
+                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
+                        }
+                    })
                     .then(newEditor => {
-                        product_specfiction_details = newEditor;
+                        product_specification_details = newEditor;
                     })
                     .catch(error => {
                         console.error(error);
@@ -528,7 +546,7 @@
 
 
                     let imageHTML = `<div class="form-element" id="imagecontainer${imageintialId}" onclick="previewBeforeUpload('file-${imageintialId}')">
-                                        <input type="file" name="product_image_gallery[0][]" id="file-${imageintialId}"
+                                        <input type="file" name="product_image_gallery[]" id="file-${imageintialId}"
                                             accept="image/*">
                                         <label for="file-${imageintialId}" id="file-${imageintialId}-preview">
                                             <img src="{{ asset('img/imagepreviewupload.jpg') }}">
@@ -562,31 +580,31 @@
                     let discontHTML = `  <div class="row" id="morediscountcontainer${discountcontainer}">   <div class="col-md-3 px-5">
                             <label for="discountname${discountcontainer}" class="form-label">Name</label>
                             <input type="text" id="discountname${discountcontainer}" class="form-control"
-                                name="product_discount_detail_name[0][]" autocomplete="off">
+                                name="product_discount_name[]" autocomplete="off">
                         </div>
 
                         <div class="col-md-3 px-5">
                             <label for="discountpercentage${discountcontainer}" class="form-label">Amount(in percentage)</label>
                             <input type="text" id="discountpercentage${discountcontainer}" class="form-control"
-                                name="product_discount_percentage[0][]" autocomplete="off">
+                                name="product_discount_percentage[]" autocomplete="off">
                         </div>
 
 
                         <div class="col-md-3 px-5">
                             <label for="product_discount_start_date${discountcontainer}" class="form-label">start Date</label>
-                            <input type="date" class="form-control" name="product_discount_start_date[0][]"
+                            <input type="date" class="form-control" name="product_discount_start_date[]"
                                 id="product_discount_start_date${discountcontainer}" autocomplete="off">
                         </div>
                         <div class="col-md-3 px-5">
                             <label for="product_discount_end_date${discountcontainer}" class="form-label">End Date</label>
-                            <input type="date" class="form-control" name="product_discount_end_date[0][]"
+                            <input type="date" class="form-control" name="product_discount_end_date[]"
                                 id="product_discount_end_date${discountcontainer}" autocomplete="off">
                         </div>
 
                         <div class="col-md-9 px-5">
                             <label for="inputAddress" class="form-label">Deatls</label>
                             <div class="form-floating">
-                                <textarea class="form-control editor" name="product_discount_detail[0][]" placeholder="Leave a comment here"
+                                <textarea class="form-control editor" name="product_discount_detail[]" placeholder="Leave a comment here"
                                     id="product_discount_details_editor${discountcontainer}" style="height: 100px"></textarea>
                             </div>
                         </div>
@@ -606,7 +624,15 @@
 
 
                     ClassicEditor
-                        .create(document.querySelector(`#product_discount_details_editor${discountcontainer}`))
+                        .create(document.querySelector(`#product_discount_details_editor${discountcontainer}`), {
+                                ckfinder: {
+                                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
+                                }
+
+                            }
+
+
+                        )
                         .then(newEditor => {
                             discounttextareacontainer.push(newEditor);
                         })
@@ -627,29 +653,29 @@
                 }
 
 
-                var productSpecfiction = 1;
+                var productspecification = 1;
 
                 var productSpecficationTextarea = [];
 
-                function addMoreProductSpecfiction() {
-                    productSpecfiction++;
+                function addMoreProductspecification() {
+                    productspecification++;
 
-                    let specificationHTML = `  <div class="row" id="productspecfication${productSpecfiction}">
+                    let specificationHTML = `  <div class="row" id="productspecfication${productspecification}">
                         <div class="col-md-3 px-5">
-                            <label for="product_specfication${productSpecfiction}" class="form-label">Name</label>
-                            <input type="text" name="product_specfiction[0][]" class="form-control"
-                                id="product_specfication${productSpecfiction}" autocomplete="off">
+                            <label for="product_specfication${productspecification}" class="form-label">Name</label>
+                            <input type="text" name="product_specification[]" class="form-control"
+                                id="product_specfication${productspecification}" autocomplete="off">
                         </div>
                         <div class="col-md-9 px-5">
                            
-                            <label for="product_specfiction_details${productSpecfiction}" class="form-label">Detail</label>
+                            <label for="product_specification_details${productspecification}" class="form-label">Detail</label>
                             <div class="form-floating">
-                            <textarea class="form-control" name="product_specfiction_details[0][]" placeholder="Leave a comment here"
-                                id="product_specfiction_details${productSpecfiction}" style="height: 100px"></textarea>
+                            <textarea class="form-control" name="product_specification_details[]" placeholder="Leave a comment here"
+                                id="product_specification_details${productspecification}" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12 px-5 d-flex justify-content-end">
-                        <span class="btn btn-danger btn-sm px-3" onclick="removeElement('productspecfication${productSpecfiction}')">-</span>
+                        <span class="btn btn-danger btn-sm px-3" onclick="removeElement('productspecfication${productspecification}')">-</span>
                     </div>
                         
 
@@ -659,7 +685,16 @@
                     $("#productspecfictaioncontainer").append(specificationHTML);
 
                     ClassicEditor
-                        .create(document.querySelector(`#product_specfiction_details${productSpecfiction}`))
+                        .create(document.querySelector(`#product_specification_details${productspecification}`), {
+                                ckfinder: {
+                                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
+                                }
+
+                            }
+
+
+
+                        )
                         .then(newEditor => {
                             productSpecficationTextarea.push(newEditor);
                         })
@@ -681,19 +716,19 @@
 
                     let productpricedetailHTML = `  <div class="row" id="productpricecontainer${productpricedetailId}">
                         <div class="col-md-3 py-3">
-                            <label for="product_mesurment_quantity${productpricedetailId}" name="product_mesurment_quantity[0][]"
+                            <label for="product_mesurment_quantity${productpricedetailId}" 
                                 class="form-label">Product
                                 Measurment Quantity</label>
-                            <input type="text" class="form-control" id="product_mesurment_quantity${productpricedetailId}" autocomplete="off">
+                            <input type="text" name="product_mesurment_quantity[]" class="form-control" id="product_mesurment_quantity${productpricedetailId}" autocomplete="off">
                         </div>
                         <div class="col-md-3 py-3">
-                            <label for="inputAddress" name="product_quantity_price[0][]"
+                            <label for="product_quantity_price${productpricedetailId}" 
                                 class="form-label">Price(MRP)</label>
-                            <input type="text" class="form-control" id="product_quantity_price${productpricedetailId}" autocomplete="off">
+                            <input type="text" name="product_quantity_price[]"  class="form-control" id="product_quantity_price${productpricedetailId}" autocomplete="off">
                         </div>
                         <div class="col-md-3 py-3">
                             <label for="product_currency_type${productpricedetailId}" class="form-label">Currency Type</label>
-                            <select id="product_currency_type${productpricedetailId}" name="product_currency_type[0][]" class="form-select">
+                            <select id="product_currency_type${productpricedetailId}" name="product_currency_type[]" class="form-select">
                                 <option selected disabled> Unit</option>
                                 <option value="inr">INR</option>
                                 <option value="usd">USD</option>
@@ -721,19 +756,19 @@
                     otherExpendureId++;
                     let otherExpendureHTML = ` <div class="row" id="otherexpendurecost${otherExpendureId}">
                         <div class="col-md-3 px-5">
-                            <label for="inputAddress" name="product_other_expenditure[0][]"
+                            <label for="inputAddress" name="product_other_expenditure[]"
                                 class="form-label">Name</label>
                             <input type="text" class="form-control" id="" autocomplete="off">
                         </div>
                         <div class="col-md-3 px-5">
                             <label for="inputAddress" class="form-label">Price</label>
-                            <input type="text" class="form-control" name="product_other_price[0][]" id=""
+                            <input type="text" class="form-control" name="product_other_price[]" id=""
                                 autocomplete="off">
                         </div>
 
                         <div class="col-md-3 px-5">
                             <label for="inputAddress" class="form-label">Currency Type</label>
-                            <select id="inputcurrency" name="product_other_currency_type[0][]" class="form-select">
+                            <select id="inputcurrency" name="product_other_expenditure_currency_type[]" class="form-select">
                                 <option selected disabled> Unit</option>
                                 <option value="inr">INR</option>
                                 <option value="usd">USD</option>
@@ -744,7 +779,7 @@
                         <div class="col-md-9 px-5">
                             <label for="inputAddress" class="form-label">Reason</label>
                             <div class="form-floating">
-                                <textarea class="form-control" id="product_other_expenditure_resaon${otherExpendureId}" name="product_other_expenditure_resaon[0][]" placeholder="Leave a comment here"
+                                <textarea class="form-control" id="product_other_expenditure_resaon${otherExpendureId}" name="product_other_expenditure_resaon[]" placeholder="Leave a comment here"
                                     id="floatingTextarea2" style="height: 100px"></textarea>
                             </div>
                         </div>
@@ -763,7 +798,18 @@
 
 
                     ClassicEditor
-                        .create(document.querySelector(`#product_other_expenditure_resaon${otherExpendureId}`))
+                        .create(document.querySelector(`#product_other_expenditure_resaon${otherExpendureId}`,
+
+                            {
+                                ckfinder: {
+                                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
+                                }
+
+                            }
+
+
+
+                        ))
                         .then(newEditor => {
                             otherExpendureCostTextarea.push(newEditor);
                         })
@@ -852,40 +898,44 @@
 
                     let formData = new FormData($("#vendorform")[0]);
 
-                    formData.append('product_other_expenditure_resaon[0][0]', product_other_expenditure_resaon.getData());
+                    console.log(product_desc.getData());
+
+                    formData.append('product_desc', product_desc.getData());
+
+                    formData.append('product_other_expenditure_resaon[0]', product_other_expenditure_resaon.getData());
                     let otherExpendureCostTextareaLength = otherExpendureCostTextarea.length;
                     for (let i = 1; i <= otherExpendureCostTextareaLength; i++) {
-                        formData.append(`product_other_expenditure_resaon[0][${i}]`, otherExpendureCostTextarea[i - 1]
+                        formData.append(`product_other_expenditure_resaon[${i}]`, otherExpendureCostTextarea[i - 1]
                             .getData());
                     }
 
-                    formData.append('product_discount_detail_name[0][0]', product_discount_detail.getData());
+                    formData.append('product_discount_detail[0]', product_discount_detail.getData());
                     let discounttextareacontainerLength = discounttextareacontainer.length;
                     for (let i = 1; i <= discounttextareacontainerLength; i++) {
 
-                        formData.append(`product_discount_detail_name[0][${i}]`, discounttextareacontainer[i - 1]
+                        formData.append(`product_discount_detail[${i}]`, discounttextareacontainer[i - 1]
                             .getData());
 
                     }
 
-                    formData.append('product_specfiction_details[0][0]', product_specfiction_details.getData());
+                    formData.append('product_specification_details[0]', product_specification_details.getData());
                     let productSpecficationTextareaLength = productSpecficationTextarea.length;
 
                     for (let i = 1; i <= productSpecficationTextareaLength; i++) {
 
-                        formData.append(`product_specfiction_details[0][${i}]`, productSpecficationTextarea[i - 1]
+                        formData.append(`product_specification_details[${i}]`, productSpecficationTextarea[i - 1]
                             .getData());
                     }
 
 
-                    var product_baneer_image = $('input[name="product_banner_image[0][]"]')[0].files;
+                    var product_baneer_image = $('input[name="product_banner_image"]')[0].files;
 
                     for (let i = 0; i < product_baneer_image.length; i++) {
                         var file = product_baneer_image[i];
                         var reader = new FileReader();
                         reader.onload = function(e) {
 
-                            formData.append('product_baneer_image[0][]', e.target.result);
+                            formData.append('product_banner_image', e.target.result);
                         };
 
                         reader.readAsDataURL(file);
@@ -895,14 +945,14 @@
 
 
 
-                    var product_image_gallery = $('input[name="product_image_gallery[0][]"]')[0].files;
+                    var product_image_gallery = $('input[name="product_image_gallery[]"]')[0].files;
 
                     for (let i = 0; i < product_image_gallery.length; i++) {
                         var file = product_image_gallery[i];
                         var reader = new FileReader();
                         reader.onload = function(e) {
 
-                            formData.append('product_image_gallery[0][]', e.target.result);
+                            formData.append('product_image_gallery[]', e.target.result);
                         };
 
                         reader.readAsDataURL(file);
