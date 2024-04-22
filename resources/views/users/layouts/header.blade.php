@@ -27,7 +27,11 @@
                             <span><i class="fa fa-linkedin"></i></span>
                         </div>
                         <div>
-                            <a href="{{ route('users-login') }}" style="color:white">Login</a>/Signup
+                            @if (request()->segment(2) == 'home')
+                                <a href="{{ route('users-login') }}" style="color:white">profile</a>
+                            @else
+                                <a href="{{ route('users-login') }}" style="color:white">Login</a>/Signup
+                            @endif
                         </div>
                     </div>
                 </div>

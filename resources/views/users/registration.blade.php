@@ -202,13 +202,13 @@
 
 
                         <!-- form -->
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="login-mobile" class="font-weight-bold text-dark">Mobile</label>
                             <div class="input-group input-group-sm">
                                 <input id="mobile" type="tel" name="mobile" class="form-control" autofocus required
                                     style="width:500px;">
                             </div>
-                        </div>
+                        </div> --}}
 
 
 
@@ -389,7 +389,7 @@
                                 otp5: otp5,
                                 otp6: otp6,
                                 user_id: user_id,
-                                user_contact: user_contact;
+                                user_contact: user_contact
                             },
                             beforeSend: function() {
 
@@ -409,10 +409,27 @@
                                 otpLifeTime();
                                 $("#timer").val(2);
 
+                                window.location.href = "{{ url('users/home') }}";
+
 
 
                             },
-                            error: (error) => {
+                            error: (xhr, status, error) => {
+
+                                if (xhr.status == 422) {
+
+
+                                    toastr.error(
+                                        xhr.responseJSON.msg
+                                    );
+                                    $('#loader').html('');
+                                    $('#main_content').removeAttr('class', 'demo');
+                                    // $("#timer").val(2);
+                                    // otpFieldScript();
+                                    // otpLifeTime();
+                                    // otpvarification();
+
+                                }
 
                             }
 
@@ -518,10 +535,21 @@
                     },
                     error: (error) => {
 
+                        if (error.responseJSON.errormessage.phone_no) {
+                            toastr.error(error.responseJSON.errormessage.phone_no[0]);
+                            $('#loader').html('');
+                            $('#main_content').removeAttr('class', 'demo');
 
-                        toastr.error(error.responseJSON.errormessage.email[0]);
-                        $('#loader').html('');
-                        $('#main_content').removeAttr('class', 'demo');
+                        }
+
+
+                        if (error.responseJSON.errormessage.email) {
+
+
+                            toastr.error(error.responseJSON.errormessage.email[0]);
+                            $('#loader').html('');
+                            $('#main_content').removeAttr('class', 'demo');
+                        }
 
                     }
 
@@ -552,7 +580,7 @@
                     success: (data) => {
 
 
-
+                        window.location.href = "{{ url('users/home') }}";
 
 
 

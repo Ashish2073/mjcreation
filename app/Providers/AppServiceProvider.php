@@ -9,6 +9,8 @@ use App\Listeners\Otpsendtomailvarification;
 use App\Listeners\Otpsendtophonevarification;
 use Illuminate\Support\Facades\Event;
 use App\smsvarification;
+use Illuminate\Foundation\Application;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(smsvarification::class, function ($app) {
             return new smsvarification();
         });
+
     }
 
     /**
@@ -27,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+       
+        
         Event::listen(
             Sendemailvarificationotp::class,
             Otpsendtomailvarification::class

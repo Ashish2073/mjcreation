@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrationControllers extends Controller
 {
@@ -34,6 +35,7 @@ class RegistrationControllers extends Controller
 
 
 
+        
         if ($validator->fails()) {
             return response()->json([
                 'sucess'=>true,
@@ -113,7 +115,7 @@ class RegistrationControllers extends Controller
         $userOtp= User::where('otp',$otpNumber)->where('id',$request->user_id)->first();
 
         if(!$userOtp){
-            return response()->json(['success' => false,'msg'=> 'You entered wrong OTP']);
+            return response()->json(['success' => false,'msg'=> 'You entered wrong OTP'],422);
         }
         else{
 
@@ -124,22 +126,25 @@ class RegistrationControllers extends Controller
 
             if($currentTime->greaterThanOrEqualTo($otpCreatedAt) && $differenceInSeconds<=120){
 
-            if($request->email){
-                User::where('id',$userOtp->id)->update([
-                    'is_verified' => '1',
-                    'email_verified_at'=> Carbon::now()
-                ]);
-            }elseif($request->phone_no){
+                    if($request->email){
+                         User::where('id',$userOtp->id)->update([
+                          'is_verified' => '1',
+                           'email_verified_at'=> Carbon::now()
+                      ]);
+               }elseif($request->phone_no){
                 User::where('id',$userOtp->id)->update([
                     'is_verified' => '1',
                     'phone_verified_at'=> Carbon::now()
                 ]);
 
-            }
-                return response()->json(['success' => true,'msg'=> 'Mail has been verified']);
+              }
+
+              Auth::login($userOtp);
+
+                return response()->json(['success' => true,'msg'=> 'Mail has been verified'],200);
             }
             else{
-                return response()->json(['success' => false,'msg'=> 'Your OTP has been Expired']);
+                return response()->json(['success' => false,'msg'=> 'Your OTP has been Expired'],422);
             }
 
         }

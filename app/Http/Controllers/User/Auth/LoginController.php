@@ -69,6 +69,10 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->user_contact, 'password' => $request->password]) || Auth::attempt(['phone_no' => $request->user_contact, 'password' => $request->password]) ) {
             // Authentication successful
             $user = Auth::user();
+
+            // return redirect()->route('users-home-view');
+
+         
                  
         } else {
             
@@ -84,6 +88,11 @@ class LoginController extends Controller
         //         'errormessage'=>$validator->errors(),
         //     ],422);
         // }
+
+    }
+
+    public function homeview(){
+        return view('users.home');
 
     }
 }

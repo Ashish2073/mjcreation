@@ -1,5 +1,5 @@
-@extends('vendors.layouts.main')
-@section('title', 'Vendor Add Product')
+@extends('livewire.managedashboard.layout.main')
+@section('title', 'vendor')
 @section('content')
     <style>
         .form {
@@ -58,7 +58,7 @@
     </style>
 
 
-    @include('websitelayout.loader');
+    @include('websitelayout.loader')
 
 
 
@@ -414,138 +414,112 @@
 
         </div>
 
-        <section>
+    </section>
 
 
 
-        @endsection
+@endsection
 
-        @section('page-script')
-            <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
-
+@section('page-script')
 
 
 
-            <script>
-                function removeElement(id) {
-                    $(`#${id}`).remove();
+    <script>
+        function removeElement(id) {
+            $(`#${id}`).remove();
+        }
 
+        // function ckeditorLoad() {
+        //     document.addEventListener('DOMContentLoaded', function() {
+        //         // Get all textarea elements with class 'editor'
+        //         var textareas = document.querySelectorAll('.editor');
+
+        //         // Loop through each textarea element and initialize ClassicEditor
+        //         textareas.forEach(function(textarea) {
+        //             ClassicEditor
+        //                 .create(textarea)
+        //                 .catch(function(error) {
+        //                     console.error(error);
+        //                 });
+        //         });
+        //     });
+        // }
+
+        // ckeditorLoad();
+
+        var product_desc;
+        ClassicEditor.create(document.querySelector("#product_desc"), {
+                ckfinder: {
+                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                },
+            })
+            .then((newEditor) => {
+                product_desc = newEditor;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        var product_other_expenditure_resaon;
+        ClassicEditor.create(
+                document.querySelector("#product_other_expenditure_resaon"), {
+                    ckfinder: {
+                        uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                    },
                 }
+            )
+            .then((newEditor) => {
+                product_other_expenditure_resaon = newEditor;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
-                // function ckeditorLoad() {
-                //     document.addEventListener('DOMContentLoaded', function() {
-                //         // Get all textarea elements with class 'editor'
-                //         var textareas = document.querySelectorAll('.editor');
+        var product_discount_detail;
 
-                //         // Loop through each textarea element and initialize ClassicEditor
-                //         textareas.forEach(function(textarea) {
-                //             ClassicEditor
-                //                 .create(textarea)
-                //                 .catch(function(error) {
-                //                     console.error(error);
-                //                 });
-                //         });
-                //     });
-                // }
+        ClassicEditor.create(document.querySelector("#product_discount_detail"), {
+                ckfinder: {
+                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                },
+            })
+            .then((newEditor) => {
+                product_discount_detail = newEditor;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
-                // ckeditorLoad();
+        var product_specification_details;
+        ClassicEditor.create(document.querySelector("#product_specification_details"), {
+                ckfinder: {
+                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                },
+            })
+            .then((newEditor) => {
+                product_specification_details = newEditor;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
-
-
-
-                let product_desc;
-                ClassicEditor
-                    .create(document.querySelector('#product_desc'), {
-                        ckfinder: {
-                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
-                        }
-                    })
-                    .then(newEditor => {
-                        product_desc = newEditor;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-
-
-
-
-                let product_other_expenditure_resaon;
-                ClassicEditor
-                    .create(document.querySelector('#product_other_expenditure_resaon'), {
-                        ckfinder: {
-                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
-                        }
-                    })
-                    .then(newEditor => {
-                        product_other_expenditure_resaon = newEditor;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-
-
-                let product_discount_detail;
-
-                ClassicEditor
-                    .create(document.querySelector('#product_discount_detail'), {
-                        ckfinder: {
-                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
-                        }
-                    })
-                    .then(newEditor => {
-                        product_discount_detail = newEditor;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-
-                let product_specification_details;
-                ClassicEditor
-                    .create(document.querySelector('#product_specification_details'), {
-                        ckfinder: {
-                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
-                        }
-                    })
-                    .then(newEditor => {
-                        product_specification_details = newEditor;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-
-
-
-
-
-
-
-
-
-
-
-                function previewBeforeUpload(id) {
-                    document.querySelector("#" + id).addEventListener("change", function(e) {
-                        if (e.target.files.length == 0) {
-                            return;
-                        }
-                        let file = e.target.files[0];
-                        let url = URL.createObjectURL(file);
-                        document.querySelector("#" + id + "-preview div").innerText = file.name;
-                        document.querySelector("#" + id + "-preview img").src = url;
-                    });
+        function previewBeforeUpload(id) {
+            document.querySelector("#" + id).addEventListener("change", function(e) {
+                if (e.target.files.length == 0) {
+                    return;
                 }
+                var file = e.target.files[0];
+                var url = URL.createObjectURL(file);
+                document.querySelector("#" + id + "-preview div").innerText = file.name;
+                document.querySelector("#" + id + "-preview img").src = url;
+            });
+        }
 
+        var imageintialId = 1;
 
+        function addMoreImage() {
+            imageintialId++;
 
-                var imageintialId = 1;
-
-                function addMoreImage() {
-                    imageintialId++;
-
-
-
-                    let imageHTML = `<div class="form-element" id="imagecontainer${imageintialId}" onclick="previewBeforeUpload('file-${imageintialId}')">
+            var imageHTML = `<div class="form-element" id="imagecontainer${imageintialId}" onclick="previewBeforeUpload('file-${imageintialId}')">
                                         <input type="file" name="product_image_gallery[]" id="file-${imageintialId}"
                                             accept="image/*">
                                         <label for="file-${imageintialId}" id="file-${imageintialId}-preview">
@@ -565,40 +539,37 @@
                                       
                                     </div>`;
 
-                    $("#product_gallery").append(imageHTML);
+            $("#product_gallery").append(imageHTML);
+        }
 
+        var discountcontainer = 1;
+        var discounttextareacontainer = [];
 
+        function addMoreDiscount() {
+            discountcontainer++;
 
-                }
-
-                var discountcontainer = 1;
-                var discounttextareacontainer = []
-
-                function addMoreDiscount() {
-                    discountcontainer++;
-
-                    let discontHTML = `  <div class="row" id="morediscountcontainer${discountcontainer}">   <div class="col-md-3 px-5">
+            var discontHTML = `  <div class="row" id="morediscountcontainer${discountcontainer}">   <div class="col-md-3 px-5">
                             <label for="discountname${discountcontainer}" class="form-label">Name</label>
                             <input type="text" id="discountname${discountcontainer}" class="form-control"
-                                name="product_discount_name[]" autocomplete="off">
+                                name="product_discount_name[]" autocompvare="off">
                         </div>
 
                         <div class="col-md-3 px-5">
                             <label for="discountpercentage${discountcontainer}" class="form-label">Amount(in percentage)</label>
                             <input type="text" id="discountpercentage${discountcontainer}" class="form-control"
-                                name="product_discount_percentage[]" autocomplete="off">
+                                name="product_discount_percentage[]" autocompvare="off">
                         </div>
 
 
                         <div class="col-md-3 px-5">
                             <label for="product_discount_start_date${discountcontainer}" class="form-label">start Date</label>
                             <input type="date" class="form-control" name="product_discount_start_date[]"
-                                id="product_discount_start_date${discountcontainer}" autocomplete="off">
+                                id="product_discount_start_date${discountcontainer}" autocompvare="off">
                         </div>
                         <div class="col-md-3 px-5">
                             <label for="product_discount_end_date${discountcontainer}" class="form-label">End Date</label>
                             <input type="date" class="form-control" name="product_discount_end_date[]"
-                                id="product_discount_end_date${discountcontainer}" autocomplete="off">
+                                id="product_discount_end_date${discountcontainer}" autocompvare="off">
                         </div>
 
                         <div class="col-md-9 px-5">
@@ -619,52 +590,37 @@
                         
                         `;
 
-                    $("#product_dicount_container").append(discontHTML);
+            $("#product_dicount_container").append(discontHTML);
 
+            ClassicEditor.create(
+                    document.querySelector(
+                        `#product_discount_details_editor${discountcontainer}`
+                    ), {
+                        ckfinder: {
+                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                        },
+                    }
+                )
+                .then((newEditor) => {
+                    discounttextareacontainer.push(newEditor);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
 
+        var productspecification = 1;
 
-                    ClassicEditor
-                        .create(document.querySelector(`#product_discount_details_editor${discountcontainer}`), {
-                                ckfinder: {
-                                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
-                                }
+        var productSpecficationTextarea = [];
 
-                            }
+        function addMoreProductspecification() {
+            productspecification++;
 
-
-                        )
-                        .then(newEditor => {
-                            discounttextareacontainer.push(newEditor);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-
-
-
-
-
-
-
-
-
-
-
-                }
-
-
-                var productspecification = 1;
-
-                var productSpecficationTextarea = [];
-
-                function addMoreProductspecification() {
-                    productspecification++;
-
-                    let specificationHTML = `  <div class="row" id="productspecfication${productspecification}">
+            var specificationHTML = `  <div class="row" id="productspecfication${productspecification}">
                         <div class="col-md-3 px-5">
                             <label for="product_specfication${productspecification}" class="form-label">Name</label>
                             <input type="text" name="product_specification[]" class="form-control"
-                                id="product_specfication${productspecification}" autocomplete="off">
+                                id="product_specfication${productspecification}" autocompvare="off">
                         </div>
                         <div class="col-md-9 px-5">
                            
@@ -681,50 +637,41 @@
 
                     </div>`;
 
+            $("#productspecfictaioncontainer").append(specificationHTML);
 
-                    $("#productspecfictaioncontainer").append(specificationHTML);
+            ClassicEditor.create(
+                    document.querySelector(
+                        `#product_specification_details${productspecification}`
+                    ), {
+                        ckfinder: {
+                            uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                        },
+                    }
+                )
+                .then((newEditor) => {
+                    productSpecficationTextarea.push(newEditor);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
 
-                    ClassicEditor
-                        .create(document.querySelector(`#product_specification_details${productspecification}`), {
-                                ckfinder: {
-                                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
-                                }
+        var productpricedetailId = 1;
 
-                            }
+        function productpricedetail() {
+            productpricedetailId++;
 
-
-
-                        )
-                        .then(newEditor => {
-                            productSpecficationTextarea.push(newEditor);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        })
-
-
-
-
-
-                }
-
-
-                var productpricedetailId = 1;
-
-                function productpricedetail() {
-                    productpricedetailId++;
-
-                    let productpricedetailHTML = `  <div class="row" id="productpricecontainer${productpricedetailId}">
+            var productpricedetailHTML = `  <div class="row" id="productpricecontainer${productpricedetailId}">
                         <div class="col-md-3 py-3">
                             <label for="product_mesurment_quantity${productpricedetailId}" 
                                 class="form-label">Product
                                 Measurment Quantity</label>
-                            <input type="text" name="product_mesurment_quantity[]" class="form-control" id="product_mesurment_quantity${productpricedetailId}" autocomplete="off">
+                            <input type="text" name="product_mesurment_quantity[]" class="form-control" id="product_mesurment_quantity${productpricedetailId}" autocompvare="off">
                         </div>
                         <div class="col-md-3 py-3">
                             <label for="product_quantity_price${productpricedetailId}" 
                                 class="form-label">Price(MRP)</label>
-                            <input type="text" name="product_quantity_price[]"  class="form-control" id="product_quantity_price${productpricedetailId}" autocomplete="off">
+                            <input type="text" name="product_quantity_price[]"  class="form-control" id="product_quantity_price${productpricedetailId}" autocompvare="off">
                         </div>
                         <div class="col-md-3 py-3">
                             <label for="product_currency_type${productpricedetailId}" class="form-label">Currency Type</label>
@@ -741,29 +688,25 @@
                         
                     </div>`;
 
+            $("#productpricecontainer").append(productpricedetailHTML);
+        }
 
-                    $("#productpricecontainer").append(productpricedetailHTML);
+        var otherExpendureId = 1;
 
+        var otherExpendureCostTextarea = [];
 
-
-                }
-
-                var otherExpendureId = 1;
-
-                var otherExpendureCostTextarea = [];
-
-                function addOtherExpendureCost() {
-                    otherExpendureId++;
-                    let otherExpendureHTML = ` <div class="row" id="otherexpendurecost${otherExpendureId}">
+        function addOtherExpendureCost() {
+            otherExpendureId++;
+            var otherExpendureHTML = ` <div class="row" id="otherexpendurecost${otherExpendureId}">
                         <div class="col-md-3 px-5">
                             <label for="inputAddress" name="product_other_expenditure[]"
                                 class="form-label">Name</label>
-                            <input type="text" class="form-control" id="" autocomplete="off">
+                            <input type="text" class="form-control" id="" autocompvare="off">
                         </div>
                         <div class="col-md-3 px-5">
                             <label for="inputAddress" class="form-label">Price</label>
                             <input type="text" class="form-control" name="product_other_price[]" id=""
-                                autocomplete="off">
+                                autocompvare="off">
                         </div>
 
                         <div class="col-md-3 px-5">
@@ -789,226 +732,165 @@
 
                     </div>`;
 
+            $("#otherexpendure").append(otherExpendureHTML);
 
+            ClassicEditor.create(
+                    document.querySelector(
+                        `#product_other_expenditure_resaon${otherExpendureId}`,
 
-
-                    $("#otherexpendure").append(otherExpendureHTML);
-
-
-
-
-                    ClassicEditor
-                        .create(document.querySelector(`#product_other_expenditure_resaon${otherExpendureId}`,
-
-                            {
-                                ckfinder: {
-                                    uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`
-                                }
-
-                            }
-
-
-
-                        ))
-                        .then(newEditor => {
-                            otherExpendureCostTextarea.push(newEditor);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        })
-
-
-
-
-
-                }
-
-
-
-
-                function selectSubproductcategory(selectElement) {
-
-                    let selectedvalue = selectElement.value;
-                    let selectedtext = selectElement.options[selectElement.selectedIndex].text;
-
-
-
-
-
-                    // let containers = document.querySelectorAll('.select-container');
-
-
-                    $.ajax({
-                        url: "{{ route('vendors-subproduct-categories') }}",
-                        type: "POST",
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            selectedvalue: selectedvalue,
-                            selectedtext: selectedtext,
-
-                        },
-                        beforeSend: function() {
-
-                            $('#loader').html('<div></div>');
-
-                            $('#main_content').attr('class',
-                                'demo');
-
-                            let selectedParentElementId = selectElement.parentElement.id;
-                            let divsToRemove = $(`#${selectedParentElementId}`).nextAll('div');
-
-                            if (divsToRemove.length > 0) {
-                                // Remove all subsequent div elements
-                                divsToRemove.remove();
-                            }
-
-
-
-
-
-                        },
-                        success: (data) => {
-
-                            $('#loader').html('');
-                            $('#main_content').removeAttr('class',
-                                'demo');
-
-                            $('#productcategoryelement').append(data.responsehtml);
-
-
-
-
-
-                        },
-                        error: (error) => {
-
+                        {
+                            ckfinder: {
+                                uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+                            },
                         }
-
-                    })
-
-                }
-
-
-
-
-                $("#savevendorproduct").on('click', function(e) {
-                    e.preventDefault();
-
-
-
-                    let formData = new FormData($("#vendorform")[0]);
-
-                    console.log(product_desc.getData());
-
-                    formData.append('product_desc', product_desc.getData());
-
-                    formData.append('product_other_expenditure_resaon[0]', product_other_expenditure_resaon.getData());
-                    let otherExpendureCostTextareaLength = otherExpendureCostTextarea.length;
-                    for (let i = 1; i <= otherExpendureCostTextareaLength; i++) {
-                        formData.append(`product_other_expenditure_resaon[${i}]`, otherExpendureCostTextarea[i - 1]
-                            .getData());
-                    }
-
-                    formData.append('product_discount_detail[0]', product_discount_detail.getData());
-                    let discounttextareacontainerLength = discounttextareacontainer.length;
-                    for (let i = 1; i <= discounttextareacontainerLength; i++) {
-
-                        formData.append(`product_discount_detail[${i}]`, discounttextareacontainer[i - 1]
-                            .getData());
-
-                    }
-
-                    formData.append('product_specification_details[0]', product_specification_details.getData());
-                    let productSpecficationTextareaLength = productSpecficationTextarea.length;
-
-                    for (let i = 1; i <= productSpecficationTextareaLength; i++) {
-
-                        formData.append(`product_specification_details[${i}]`, productSpecficationTextarea[i - 1]
-                            .getData());
-                    }
-
-
-                    var product_baneer_image = $('input[name="product_banner_image"]')[0].files;
-
-                    for (let i = 0; i < product_baneer_image.length; i++) {
-                        var file = product_baneer_image[i];
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-
-                            formData.append('product_banner_image', e.target.result);
-                        };
-
-                        reader.readAsDataURL(file);
-                    }
-
-
-
-
-
-                    var product_image_gallery = $('input[name="product_image_gallery[]"]')[0].files;
-
-                    for (let i = 0; i < product_image_gallery.length; i++) {
-                        var file = product_image_gallery[i];
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-
-                            formData.append('product_image_gallery[]', e.target.result);
-                        };
-
-                        reader.readAsDataURL(file);
-                    }
-
-
-
-                    console.log(formData);
-
-                    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-
-                    $.ajax({
-                        url: "{{ route('vendor-saveproduct') }}",
-                        type: "POST",
-                        data: formData,
-                        async: false,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-
-
-                        beforeSend: function() {
-
-                            $('#loader').html('<div></div>');
-
-                            $('#main_content').attr('class',
-                                'demo');
-
-                        },
-                        success: (data) => {
-                            console.log(data);
-                            $('#loader').html('');
-                            $('#main_content').removeAttr('class',
-                                'demo');
-
-
-
-
-
-
-
-
-
-                        },
-                        error: (error) => {
-
-                        }
-
-                    })
-
+                    )
+                )
+                .then((newEditor) => {
+                    otherExpendureCostTextarea.push(newEditor);
                 })
-            </script>
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        function selectSubproductcategory(selectElement) {
+            var selectedvalue = selectElement.value;
+            var selectedtext = selectElement.options[selectElement.selectedIndex].text;
+
+            // var containers = document.querySelectorAll('.select-container');
+
+            $.ajax({
+                url: "{{ route('vendors-subproduct-categories') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    selectedvalue: selectedvalue,
+                    selectedtext: selectedtext,
+                },
+                beforeSend: function() {
+                    $("#loader").html("<div></div>");
+
+                    $("#main_content").attr("class", "demo");
+
+                    var selectedParentElementId = selectElement.parentElement.id;
+                    var divsToRemove = $(`#${selectedParentElementId}`).nextAll("div");
+
+                    if (divsToRemove.length > 0) {
+                        // Remove all subsequent div elements
+                        divsToRemove.remove();
+                    }
+                },
+                success: (data) => {
+                    $("#loader").html("");
+                    $("#main_content").removeAttr("class", "demo");
+
+                    $("#productcategoryelement").append(data.responsehtml);
+                },
+                error: (error) => {},
+            });
+        }
+
+        $("#savevendorproduct").on("click", function(e) {
+            e.preventDefault();
+
+            var formData = new FormData($("#vendorform")[0]);
 
 
 
-        @endsection
+            formData.append("product_desc", product_desc.getData());
+
+            formData.append(
+                "product_other_expenditure_resaon[0]",
+                product_other_expenditure_resaon.getData()
+            );
+            var otherExpendureCostTextareaLength = otherExpendureCostTextarea.length;
+            for (var i = 1; i <= otherExpendureCostTextareaLength; i++) {
+                formData.append(
+                    `product_other_expenditure_resaon[${i}]`,
+                    otherExpendureCostTextarea[i - 1].getData()
+                );
+            }
+
+            formData.append(
+                "product_discount_detail[0]",
+                product_discount_detail.getData()
+            );
+            var discounttextareacontainerLength = discounttextareacontainer.length;
+            for (var i = 1; i <= discounttextareacontainerLength; i++) {
+                formData.append(
+                    `product_discount_detail[${i}]`,
+                    discounttextareacontainer[i - 1].getData()
+                );
+            }
+
+            formData.append(
+                "product_specification_details[0]",
+                product_specification_details.getData()
+            );
+            var productSpecficationTextareaLength = productSpecficationTextarea.length;
+
+            for (var i = 1; i <= productSpecficationTextareaLength; i++) {
+                formData.append(
+                    `product_specification_details[${i}]`,
+                    productSpecficationTextarea[i - 1].getData()
+                );
+            }
+
+            var product_baneer_image = $('input[name="product_banner_image"]')[0].files;
+
+            for (var i = 0; i < product_baneer_image.length; i++) {
+                var file = product_baneer_image[i];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    formData.append("product_banner_image", e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+            var product_image_gallery = $('input[name="product_image_gallery[]"]')[0]
+                .files;
+
+            for (var i = 0; i < product_image_gallery.length; i++) {
+                var file = product_image_gallery[i];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    formData.append("product_image_gallery[]", e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+
+
+            formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
+
+            $.ajax({
+                url: "{{ route('vendor-saveproduct') }}",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                beforeSend: function() {
+                    $("#loader").html("<div></div>");
+
+                    $("#main_content").attr("class", "demo");
+                },
+                success: (data) => {
+                    console.log(data);
+                    $("#loader").html("");
+                    $("#main_content").removeAttr("class", "demo");
+                },
+                error: (error) => {},
+            });
+        });
+    </script>
+
+
+@endsection

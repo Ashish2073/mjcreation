@@ -161,6 +161,12 @@ class ProductController extends Controller
     }
 
 
+    public function bulkimport(Request $request){
+        return view('vendors.products.import');
+
+    }
+
+
 
 
 }
