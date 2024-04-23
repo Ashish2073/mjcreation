@@ -1088,10 +1088,11 @@
                 reader.readAsDataURL(file);
             }
 
-            var product_color_image_banner = $('input[name="product_color_baneer_image[]"]')[0]
+            var product_color_image_banner = $('input[name="product_color_banner_image[]"]')[0]
                 .files;
 
-            for (var i = 0; i < product_color_image_banner.length; i++) {
+
+            for (let i = 0; i < product_color_image_banner.length; i++) {
 
                 var file = product_color_image_banner[i];
                 var reader = new FileReader();

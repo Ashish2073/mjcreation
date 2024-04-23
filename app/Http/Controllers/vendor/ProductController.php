@@ -69,7 +69,7 @@ class ProductController extends Controller
     public function saveproduct(Request $request){
 
     
-        dd($request->all());
+        
 
         $vendorProduct=new VendorProduct();
         $vendorProduct->vendor_id=1;
@@ -83,24 +83,32 @@ class ProductController extends Controller
        
         $vendorProduct->measurement_unit_name=$request->product_mesurment_unit;
 
-        $vendorProduct->product_mesurment_quantity=json_encode($request->product_mesurment_quantity);
+        $vendorProduct->product_mesurment_quantity=(isset($request->product_mesurment_quantity[0]))?json_encode($request->product_mesurment_quantity):Null;
 
-        $vendorProduct->product_quantity_price=json_encode($request->product_quantity_price);
+        $vendorProduct->product_quantity_price=(isset($request->product_quantity_price))?json_encode($request->product_quantity_price): Null;
 
-        $vendorProduct->product_currency_type=json_encode($request->product_currency_type);
+        $vendorProduct->product_currency_type=(isset($request->product_currency_type))?json_encode($request->product_currency_type):Null;
 
-        $vendorProduct->product_other_expenditure_cost=json_encode($request->product_other_price);
-        $vendorProduct->product_other_expenditure_resaon=json_encode($request->product_other_expenditure_resaon);
-        $vendorProduct->product_other_expenditure_currency_type=json_encode($request->product_other_expenditure_currency_type);
+        $vendorProduct->product_other_expenditure_cost=json_encode($request->product_other_price) ?? Null;
 
-        $vendorProduct->product_specification=json_encode($request->product_specification);
-        $vendorProduct->product_specification_details=json_encode($request->product_specification_details);
+        $vendorProduct->product_other_expenditure_resaon=json_encode($request->product_other_expenditure_resaon)??Null;
 
-        $vendorProduct->product_discount_name=json_encode($request->product_discount_name);
-        $vendorProduct->product_discount_percentage=json_encode($request->product_discount_percentage);
-        $vendorProduct->product_discount_start_date= json_encode($request->product_discount_start_date);
-        $vendorProduct->product_discount_end_date=json_encode($request->product_discount_end_date);
-        $vendorProduct->product_discount_detail=json_encode($request->product_discount_detail);
+        $vendorProduct->product_other_expenditure_currency_type=json_encode($request->product_other_expenditure_currency_type)??Null;
+
+        $vendorProduct->product_specification=json_encode($request->product_specification) ?? Null;
+
+        $vendorProduct->product_specification_details=json_encode($request->product_specification_details) ?? Null;
+
+        $vendorProduct->product_discount_name=json_encode($request->product_discount_name) ?? Null;
+
+        $vendorProduct->product_discount_percentage=json_encode($request->product_discount_percentage)?? Null;
+
+        $vendorProduct->product_discount_start_date= json_encode($request->product_discount_start_date)?? Null;
+
+        $vendorProduct->product_discount_end_date=json_encode($request->product_discount_end_date) ?? Null;
+
+        $vendorProduct->product_discount_detail=json_encode($request->product_discount_detail) ?? Null;
+        
 
         if($request->hasFile('product_banner_image')){
             $originName=$request->file('product_banner_image')->getClientOriginalName();
@@ -139,10 +147,11 @@ class ProductController extends Controller
 
         }
 
-        if($request->hasFile('product_color_image_gallery')){
+        if($request->hasFile('product_color_banner_image')){
 
-            $product_color_image_file_name=[];
-            foreach($request->file('product_color_image_gallery') as $image){
+            $product_color_banner_image_file_name=[];
+            foreach($request->file('product_color_banner_image') as $image){
+                
                 $originName=$image->getClientOriginalName();
                 $fileName=pathinfo($originName,PATHINFO_FILENAME);
                 $extension=$image->getClientOriginalExtension();
@@ -152,18 +161,54 @@ class ProductController extends Controller
                 
                 $image->move(public_path('product/gallery'),$fileName);
 
-                array_push($product_color_image_file_name,$fileName);
+                array_push($product_color_banner_image_file_name,$fileName);
 
             }
 
 
-            $vendorProduct->product_color_image_gallery=json_encode($product_color_image_file_name);
+            $vendorProduct->product_color_banner_image=json_encode($product_color_banner_image_file_name);
 
 
 
 
 
         }
+
+
+        if(isset($request->product_color_image_gallery)){
+            $product_color_image_gallery_file_name=[];
+            foreach($request->product_color_image_gallery as $k=>$images){
+
+                
+
+                foreach($images as $l=>$img){
+
+                    $originName=$img->getClientOriginalName();
+                    $fileName=pathinfo($originName,PATHINFO_FILENAME);
+                    $extension=$img->getClientOriginalExtension();
+    
+                    $fileName=$fileName.'__'.time().'.'.$extension;
+    
+                    
+                    $img->move(public_path('product/gallery'),$fileName);
+    
+                    $product_color_image_gallery_file_name[$k][$l]=$fileName;
+
+
+                }
+
+            }
+            $vendorProduct->product_color_image_gallery=json_encode($product_color_image_gallery_file_name);
+        }
+
+       
+
+
+
+
+
+
+
 
         $vendorProduct->save();
 

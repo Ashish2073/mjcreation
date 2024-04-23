@@ -34,6 +34,8 @@ class VendorProduct extends Model
         'product_discount_detail',
         'product_banner_image',
         'product_image_gallery',
+        'product_color_image_gallery',
+        'product_color_banner_image',
         'product_color_image_gallery'
 
 

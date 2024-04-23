@@ -15,6 +15,7 @@ class VendorProductImport implements ToModel
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    public $response;
     public function model(array $row)
     {
         dd($row);
@@ -32,4 +33,8 @@ class VendorProductImport implements ToModel
     {
         return 100;
     }
+
+    
+
+
 }
