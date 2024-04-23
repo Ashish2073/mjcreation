@@ -17,6 +17,7 @@ class VendorProductImport implements ToModel
     */
     public function model(array $row)
     {
+        dd($row);
         return new VendorProduct([
             //
         ]);

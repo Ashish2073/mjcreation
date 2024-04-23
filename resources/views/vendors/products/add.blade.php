@@ -398,6 +398,73 @@
                     </div>
 
 
+
+
+
+                </div>
+
+
+                <h4 class="mt-5">Product Different Color Image(optional)</h4>
+
+                <span class="btn btn-success btn-sm px-3" onclick="addMoreImagefordiffentcolorContainer()">+</span>
+                <div class="col-md-12 card py-4" id="addMoreImagefordiffentcolorContainer">
+
+                    <div class="col-md-12 pl-2">
+                        <label for="inputAddress" class="form-label">Please select banner image of products</label>
+                        <div class="form">
+
+                            <div class="grid">
+                                <div class="form-element" onclick=" previewBeforeUpload('file-color-banner')">
+                                    <input type="file" name="product_color_banner_image[]" id="file-color-banner"
+                                        accept="image/*">
+                                    <label for="file-color-banner" id="file-color-banner-preview">
+                                        <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
+                                        <div>
+                                            <span>+</span>
+                                        </div>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 px-5 d-flex justify-content-end">
+                        <span class="btn btn-success btn-sm px-3" onclick="addMoreColorImage(0)">+</span>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 pl-2">
+                            <label for="inputAddress" class="form-label">Please select Image</label>
+                            <div class="form">
+
+                                <div class="grid" id="product_color_gallery_0">
+                                    <div class="form-element" onclick="previewBeforeUpload('file-color-0-0')">
+                                        <input type="file" name="product_color_image_gallery[0][]" id="file-color-0-0"
+                                            accept="image/*">
+                                        <label for="file-color-0-0" id="file-color-0-0-preview">
+                                            <img src="{{ asset('img/imagepreviewupload.jpg') }}">
+                                            <div>
+                                                <span>+</span>
+                                            </div>
+                                        </label>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
                 </div>
 
 
@@ -425,27 +492,20 @@
 
 
     <script>
+        function isset(variable) {
+            return typeof variable !== 'undefined' && variable !== null;
+        }
+
+
+
+
+
         function removeElement(id) {
+
             $(`#${id}`).remove();
         }
 
-        // function ckeditorLoad() {
-        //     document.addEventListener('DOMContentLoaded', function() {
-        //         // Get all textarea elements with class 'editor'
-        //         var textareas = document.querySelectorAll('.editor');
 
-        //         // Loop through each textarea element and initialize ClassicEditor
-        //         textareas.forEach(function(textarea) {
-        //             ClassicEditor
-        //                 .create(textarea)
-        //                 .catch(function(error) {
-        //                     console.error(error);
-        //                 });
-        //         });
-        //     });
-        // }
-
-        // ckeditorLoad();
 
         var product_desc;
         ClassicEditor.create(document.querySelector("#product_desc"), {
@@ -514,22 +574,71 @@
             });
         }
 
-        var imageintialId = 1;
+
+        var multipelimageId = 1;
+
+
 
         function addMoreImage() {
-            imageintialId++;
+            multipelimageId++;
 
-            var imageHTML = `<div class="form-element" id="imagecontainer${imageintialId}" onclick="previewBeforeUpload('file-${imageintialId}')">
-                                        <input type="file" name="product_image_gallery[]" id="file-${imageintialId}"
+            var imageHTML = `<div class="form-element" id="imagecontainer${multipelimageId}" onclick="previewBeforeUpload('file-${multipelimageId}')">
+                                <input type="file" name="product_image_gallery[]" id="file-${multipelimageId}"
+                                    accept="image/*">
+                                <label for="file-${multipelimageId}" id="file-${multipelimageId}-preview">
+                                    <img src="{{ asset('img/imagepreviewupload.jpg') }}">
+                                    <div>
+                                        <span>+</span>
+                                       
+                                    </div>
+                                    <div>
+                                    <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer${multipelimageId}')">-</span>
+                               </div>
+                                    </label>
+
+                                
+                                      
+                                    
+                              
+                            </div>`;
+
+            $(`#product_gallery`).append(imageHTML);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        var multiplcolorimageId = 1;
+
+
+
+        function addMoreColorImage(d) {
+
+            console.log(d);
+
+            var containerColorId = d;
+
+            multiplcolorimageId++;
+
+            var imagecolorHTML = `<div class="form-element" id="imagecontainer${containerColorId}${multiplcolorimageId}" onclick="previewBeforeUpload('file-${containerColorId}-${multiplcolorimageId}')">
+                                        <input type="file" name="product_color_image_gallery[${containerColorId}][]" id="file-${containerColorId}-${multiplcolorimageId}"
                                             accept="image/*">
-                                        <label for="file-${imageintialId}" id="file-${imageintialId}-preview">
+                                        <label for="file-${containerColorId}-${multiplcolorimageId}" id="file-${containerColorId}-${multiplcolorimageId}-preview">
                                             <img src="{{ asset('img/imagepreviewupload.jpg') }}">
                                             <div>
                                                 <span>+</span>
                                                
                                             </div>
                                             <div>
-                                            <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer${imageintialId}')">-</span>
+                                            <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer${containerColorId}${multiplcolorimageId}')">-</span>
                                        </div>
                                             </label>
 
@@ -539,8 +648,124 @@
                                       
                                     </div>`;
 
-            $("#product_gallery").append(imageHTML);
+
+            $(`#product_color_gallery_${containerColorId}`).append(imagecolorHTML);
         }
+
+
+
+
+
+
+
+        var addMoreImagefordiffentcolorContainerId = 0;
+
+        function addMoreImagefordiffentcolorContainer() {
+
+            addMoreImagefordiffentcolorContainerId++;
+
+            var addMoreImagefordiffentcolorContainerHTML = `<div class="col-md-12 card py-4 mt-2" id="addMoreImagefordiffentcolorContainer${addMoreImagefordiffentcolorContainerId}">
+
+                                                          <div class="col-md-12 pl-2">
+                                                          <label for="inputAddress" class="form-label">Please select banner image of products</label>
+                                                           <div class="form">
+                                                           <div class="grid">
+                                                            <div class="form-element" onclick=" previewBeforeUpload('file-color-banner${addMoreImagefordiffentcolorContainerId}')">
+                                                      <input type="file" name="product_color_banner_image[]" id="file-color-banner${addMoreImagefordiffentcolorContainerId}"   accept="image/*">
+                                                     <label for="file-color-banner${addMoreImagefordiffentcolorContainerId}" id="file-color-banner${addMoreImagefordiffentcolorContainerId}-preview">
+                                                     <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
+                                                       <div>
+                                                    <span>+</span>
+                                                   </div>
+                                                   </label>
+                                                 </div>
+                                                 </div>
+                                             </div>
+                                        </div>
+                                     <div class="col-md-12 px-5 d-flex justify-content-end">
+                                      <span class="btn btn-success btn-sm px-3" id="" onclick="addMoreColorImage(${addMoreImagefordiffentcolorContainerId})">+</span>
+                            </div>
+                           
+
+                           <div class="row">
+                         <div class="col-md-12 pl-2">
+                               <label for="inputAddress" class="form-label">Please select Image</label>
+                    <div class="form">
+
+            <div class="grid" id="product_color_gallery_${addMoreImagefordiffentcolorContainerId}">
+                <div class="form-element" onclick="previewBeforeUpload('file-color-${addMoreImagefordiffentcolorContainerId}-${addMoreImagefordiffentcolorContainerId}')">
+                    <input type="file" name="product_color_image_gallery[${addMoreImagefordiffentcolorContainerId}][]" id="file-color-${addMoreImagefordiffentcolorContainerId}-${addMoreImagefordiffentcolorContainerId}"
+                        accept="image/*">
+                    <label for="file-color-${addMoreImagefordiffentcolorContainerId}-${addMoreImagefordiffentcolorContainerId}" id="file-color-${addMoreImagefordiffentcolorContainerId}-${addMoreImagefordiffentcolorContainerId}-preview">
+                        <img src="{{ asset('img/imagepreviewupload.jpg') }}">
+                        <div>
+                            <span>+</span>
+                        </div>
+                    </label>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('addMoreImagefordiffentcolorContainer${addMoreImagefordiffentcolorContainerId}')">-</span>
+
+
+</div>`;
+
+            $("#addMoreImagefordiffentcolorContainer").append(addMoreImagefordiffentcolorContainerHTML);
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // var imagecolorintialId = 1;
+
+        // function addMoreImagefordiffentcolor() {
+        //     imagecolorintialId++;
+
+        //     var imageColorContainerHTML = `<div class="form-element" id="imagecontainer-color-${imagecolorintialId}" onclick="previewBeforeUpload('file-color-${imagecolorintialId}')">
+    //                                 <input type="file" name="product_image_gallery[]" id="file-color-${imagecolorintialId}"
+    //                                     accept="image/*">
+    //                                 <label for="file-color-${imagecolorintialId}" id="file-color-${imagecolorintialId}-preview">
+    //                                     <img src="{{ asset('img/imagepreviewupload.jpg') }}">
+    //                                     <div>
+    //                                         <span>+</span>
+
+    //                                     </div>
+    //                                     <div>
+    //                                     <span class="btn btn-danger justify-content-center" style="font-size:unset !important ;margin-top: 45px;" onclick="removeElement('imagecontainer-color-${imagecolorintialId}')">-</span>
+    //                                </div>
+    //                                     </label>
+
+
+
+
+
+    //                             </div>`;
+
+        //     $("#product_color_gallery").append(imageColorContainerHTML);
+
+        // }
+
+
+
+
+
 
         var discountcontainer = 1;
         var discounttextareacontainer = [];
@@ -823,18 +1048,20 @@
                 );
             }
 
+
+
             formData.append(
                 "product_specification_details[0]",
                 product_specification_details.getData()
             );
             var productSpecficationTextareaLength = productSpecficationTextarea.length;
-
             for (var i = 1; i <= productSpecficationTextareaLength; i++) {
                 formData.append(
                     `product_specification_details[${i}]`,
                     productSpecficationTextarea[i - 1].getData()
                 );
             }
+
 
             var product_baneer_image = $('input[name="product_banner_image"]')[0].files;
 
@@ -860,6 +1087,67 @@
 
                 reader.readAsDataURL(file);
             }
+
+            var product_color_image_banner = $('input[name="product_color_baneer_image[]"]')[0]
+                .files;
+
+            for (var i = 0; i < product_color_image_banner.length; i++) {
+
+                var file = product_color_image_banner[i];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    formData.append("product_color_image_banner[]", e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+
+
+
+
+
+
+            let product_color_gallery_image_new = [];
+            let product_color_new_index = 0;
+            for (let i = 0; i < addMoreImagefordiffentcolorContainerId; i++) {
+
+                if (isset($(`input[name="product_color_image_gallery[${i}][]"]`))) {
+
+
+                    let product_color_image_gallery_data = $(`input[name="product_color_image_gallery[${i}][]"]`)[0]
+                        .files;
+                    let product_color_image_gallery_data_length = product_color_image_gallery_data.length;
+
+                    for (let j = 0; j < product_color_image_gallery_data_length; j++) {
+
+                        var file = product_color_image_gallery_data[j];
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            formData.append(`product_color_image_banner[${product_color_new_index}][]`, e.target
+                                .result);
+                        };
+
+                        reader.readAsDataURL(file);
+
+
+                    }
+
+                    product_color_new_index++;
+
+
+                }
+
+
+
+
+            }
+
+
+
+
+
+
 
 
 

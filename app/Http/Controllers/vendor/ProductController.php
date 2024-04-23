@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Productcategory;
 use App\Models\Productbrand;
 use App\Models\VendorProduct;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\VendorProductImport;
 
 class ProductController extends Controller
 {
@@ -67,7 +69,7 @@ class ProductController extends Controller
     public function saveproduct(Request $request){
 
     
-        
+        dd($request->all());
 
         $vendorProduct=new VendorProduct();
         $vendorProduct->vendor_id=1;
@@ -137,6 +139,32 @@ class ProductController extends Controller
 
         }
 
+        if($request->hasFile('product_color_image_gallery')){
+
+            $product_color_image_file_name=[];
+            foreach($request->file('product_color_image_gallery') as $image){
+                $originName=$image->getClientOriginalName();
+                $fileName=pathinfo($originName,PATHINFO_FILENAME);
+                $extension=$image->getClientOriginalExtension();
+
+                $fileName=$fileName.'__'.time().'.'.$extension;
+
+                
+                $image->move(public_path('product/gallery'),$fileName);
+
+                array_push($product_color_image_file_name,$fileName);
+
+            }
+
+
+            $vendorProduct->product_color_image_gallery=json_encode($product_color_image_file_name);
+
+
+
+
+
+        }
+
         $vendorProduct->save();
 
 
@@ -165,6 +193,20 @@ class ProductController extends Controller
         return view('vendors.products.import');
 
     }
+
+    public function importproductdata(Request $request){
+    
+        $request->validate([
+            'import_product_file' => 'required|max:2048', 
+        ]);
+  
+        $productImport=new VendorProductImport();
+        Excel::import($productImport, $request->file('import_product_file'));
+                 
+        return response()->json($productImport->response);
+    }
+
+
 
 
 

@@ -25,7 +25,7 @@
                     {{-- {{ route('import.product.data') }} --}}
                     <div class="card-content">
                         <div class="card-body card-dashboard">
-                            <form method="POST" id="import-poduct-add" action="#" name="import-data-form">
+                            <form method="POST" id="import-product-add" action="#" name="import-data-form">
                                 @csrf
                                 <div class="form-group">
                                     <label for="import_product_file">Excel File</label>
@@ -91,86 +91,59 @@
             'hideMethod': 'fadeOut',
         }
 
-        function formValiadation() {
-
-            $("form[name='import-data-form']").validate({
-
-                rules: {
-                    import_product_file: {
-                        required: true,
-                        extension: "xls|xlsx",
-                    }
-
-                },
-
-                messages: {
-                    import_product_file: {
-                        required: 'Please select a file',
-                        extension: 'Please select a valid Excel file (XLS or XLSX)'
-                    }
-
-                },
-
-                submitHandler: function(form) {
-                    console.log(form);
-                    form.submit();
-                },
-                invalidHandler: function(form, validator) {
-                    var errors = validator.errorList.map(function(error) {
-                        return error.message;
-                    });
-                    console.error("Validation errors:", errors);
+        $("form[name='import-data-form']").validate({
+            rules: {
+                import_product_file: {
+                    required: true,
+                    extension: "xls|xlsx",
                 }
-            });
-        };
+            },
+            messages: {
+                import_product_file: {
+                    required: 'Please select a file',
+                    extension: 'Please select a valid Excel file (XLS or XLSX)'
+                }
+            },
+            submitHandler: function(form) {
+                let formData = new FormData(form);
+                let excelFile = $('input[name="import_product_file"]')[0].files[0];
+                formData.append("import_product_file", excelFile);
 
-        $("#import-product-btn").on('click', function(e) {
+                // You can add additional form data here if needed
+                formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
 
-            e.preventDefault();
-            formValiadation();
-            $("form[name='import-data-form']").valid();
-
-            var formData = new FormData($("#import-data-form'")[0]);
-
-            var excelFile = $('input[name="import_product_file"]')[0].files[0];
-
-            formData.append("import_product_file", excelFile);
-
-            formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
-
-
-
-
-
-
-            $.ajax({
-                url: "{{ route('import.product.data') }}",
-                type: "POST",
-                data: formData,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                },
-
-                beforeSend: function() {
-                    $("#loader").html("<div></div>");
-
-                    $("#main_content").attr("class", "demo");
-                },
-                success: (data) => {
-                    console.log(data);
-                    $("#loader").html("");
-                    $("#main_content").removeAttr("class", "demo");
-                },
-                error: (error) => {},
-            });
-
-
-
-        })
+                $.ajax({
+                    url: "{{ route('import.product.data') }}",
+                    type: "POST",
+                    data: formData,
+                    async: true,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    beforeSend: function() {
+                        $("#loader").html("<div></div>");
+                        $("#main_content").addClass("demo");
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        $("#loader").html("");
+                        $("#main_content").removeClass("demo");
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    },
+                });
+            },
+            invalidHandler: function(form, validator) {
+                var errors = validator.errorList.map(function(error) {
+                    return error.message;
+                });
+                console.error("Validation errors:", errors);
+            }
+        });
     </script>
 
 @endsection
