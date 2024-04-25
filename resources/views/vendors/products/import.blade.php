@@ -73,6 +73,7 @@
 @endsection
 
 @section('page-script')
+
     <script>
         toastr.options = {
             'closeButton': true,
@@ -131,6 +132,33 @@
                         console.log(data);
                         $("#loader").html("");
                         $("#main_content").removeClass("demo");
+
+                        if (data.success) {
+                            toastr.success(
+                                "Data import Sucessfully"
+                            );
+
+
+                        } else {
+                            let sheetError = data.sheetError;
+
+                            let sheetErrorCount = sheetError.length;
+                            let errrorMessage = "";
+                            for (let i = 0; i < sheetErrorCount; i++) {
+                                errrorMessage = errrorMessage + " " + (i + 1) + "-" + sheetError[i]
+                                    .message + "\n";
+
+                            }
+
+                            toastr.error(
+                                "Somethings get wroung please check on sheet"
+                            );
+
+                            displaySheetError(data.sheetError);
+
+                        }
+
+
                     },
                     error: function(error) {
                         console.error(error);
@@ -144,6 +172,36 @@
                 console.error("Validation errors:", errors);
             }
         });
+
+
+        function displaySheetError(sheetErrors) {
+            $('.sheet--error-body').html('');
+
+            if (sheetErrors == undefined) {
+                $(".sheet--error").addClass('d-none');
+                return;
+            }
+
+            if (sheetErrors.length == 0) {
+                $(".sheet--error").addClass('d-none');
+                return;
+            }
+
+            $('.sheet--error').removeClass('d-none');
+
+            sheetErrors.forEach(function(sheetError) {
+                $(".sheet--error-body").append(`
+                    <tr>
+                        <td>${sheetError.rowNumber}</td>
+                        <td>${sheetError.message}</td>
+                    <tr>
+                `);
+            });
+
+            $('html, body').animate({
+                scrollTop: $(".sheet--error-body").offset().top
+            }, 500);
+        }
     </script>
 
 @endsection

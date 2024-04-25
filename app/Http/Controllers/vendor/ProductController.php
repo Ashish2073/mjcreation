@@ -9,6 +9,7 @@ use App\Models\Productbrand;
 use App\Models\VendorProduct;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\VendorProductImport;
+use App\Models\Productspecficationheading;
 
 class ProductController extends Controller
 {
@@ -16,9 +17,11 @@ class ProductController extends Controller
         $product_category=Productcategory::where('parent_id',0)->get();
 
         $product_brands=Productbrand::select('name','id')->get();
+ 
+        $product_specification_headings=Productspecficationheading::select('name','id')->get();
         
         
-        return view('vendors.products.add',['product_category'=>$product_category,'product_brands'=>$product_brands]);
+        return view('vendors.products.add',['product_category'=>$product_category,'product_brands'=>$product_brands,'product_specification_headings'=>$product_specification_headings]);
     }
 
 
@@ -79,9 +82,14 @@ class ProductController extends Controller
         $vendorProduct->brand_id=2;
         $vendorProduct->product_quantity=$request->product_quantity;
         $vendorProduct->discription=$request->product_desc;
+        $vendorProduct->product_warrenty=$request->product_warrenty;
+
+
         $vendorProduct->measurement_parameter_name=$request->product_mesurment_parameter;
        
         $vendorProduct->measurement_unit_name=$request->product_mesurment_unit;
+
+
 
         $vendorProduct->product_mesurment_quantity=(isset($request->product_mesurment_quantity[0]))?json_encode($request->product_mesurment_quantity):Null;
 
@@ -89,25 +97,26 @@ class ProductController extends Controller
 
         $vendorProduct->product_currency_type=(isset($request->product_currency_type))?json_encode($request->product_currency_type):Null;
 
-        $vendorProduct->product_other_expenditure_cost=json_encode($request->product_other_price) ?? Null;
+        // $vendorProduct->product_other_expenditure_cost=json_encode($request->product_other_price) ?? Null;
 
-        $vendorProduct->product_other_expenditure_resaon=json_encode($request->product_other_expenditure_resaon)??Null;
+        // $vendorProduct->product_other_expenditure_resaon=json_encode($request->product_other_expenditure_resaon)??Null;
 
-        $vendorProduct->product_other_expenditure_currency_type=json_encode($request->product_other_expenditure_currency_type)??Null;
+        // $vendorProduct->product_other_expenditure_currency_type=json_encode($request->product_other_expenditure_currency_type)??Null;
 
+        $vendorProduct->product_specification_heading=isset($request->product_specification_heading[0])?json_encode($request->product_specfication_heading):Null;
         $vendorProduct->product_specification=json_encode($request->product_specification) ?? Null;
 
         $vendorProduct->product_specification_details=json_encode($request->product_specification_details) ?? Null;
 
-        $vendorProduct->product_discount_name=json_encode($request->product_discount_name) ?? Null;
+        // $vendorProduct->product_discount_name=json_encode($request->product_discount_name) ?? Null;
 
-        $vendorProduct->product_discount_percentage=json_encode($request->product_discount_percentage)?? Null;
+        // $vendorProduct->product_discount_percentage=json_encode($request->product_discount_percentage)?? Null;
 
-        $vendorProduct->product_discount_start_date= json_encode($request->product_discount_start_date)?? Null;
+        // $vendorProduct->product_discount_start_date= json_encode($request->product_discount_start_date)?? Null;
 
-        $vendorProduct->product_discount_end_date=json_encode($request->product_discount_end_date) ?? Null;
+        // $vendorProduct->product_discount_end_date=json_encode($request->product_discount_end_date) ?? Null;
 
-        $vendorProduct->product_discount_detail=json_encode($request->product_discount_detail) ?? Null;
+        // $vendorProduct->product_discount_detail=json_encode($request->product_discount_detail) ?? Null;
         
 
         if($request->hasFile('product_banner_image')){
@@ -244,9 +253,11 @@ class ProductController extends Controller
         $request->validate([
             'import_product_file' => 'required|max:2048', 
         ]);
-  
-        $productImport=new VendorProductImport();
+   
+        $productImport = new VendorProductImport();
         Excel::import($productImport, $request->file('import_product_file'));
+
+        // dd($productImport->response); 
                  
         return response()->json($productImport->response);
     }

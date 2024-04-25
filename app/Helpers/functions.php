@@ -3,7 +3,7 @@
 if(!function_exists('mergerequestoremailorphone_no')) {
     function mergerequestoremailorphone_no($request)
     {
-        $emailPattern = '/^[a-zA-Z0-9._%+-]+@gmail\.com$/';
+        $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
         $phoneNumberPattern='/^[6-9]\d{9}$/';
 
 

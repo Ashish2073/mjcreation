@@ -155,6 +155,14 @@
                     </div>
                 </div>
 
+                <div class="col-md-12">
+                    <label for="product_warrenty" class="form-label">Poduct Warranty Deatails(optional)</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="product_warrenty" name="product_warrenty" placeholder="Leave a comment here"
+                            style="height: 100px"></textarea>
+                    </div>
+                </div>
+
 
 
 
@@ -222,7 +230,7 @@
 
                 </div>
 
-                <h4 class="mt-5">Others Expenditure Product Cost</h4>
+                {{-- <h4 class="mt-5">Others Expenditure Product Cost</h4>
                 <div class="col-md-12 card py-4" id="otherexpendure">
                     <div class="col-md-12 px-5 d-flex justify-content-end">
                         <span class="btn btn-success btn-sm px-3" onclick="addOtherExpendureCost()">+</span>
@@ -261,7 +269,7 @@
                     </div>
 
 
-                </div>
+                </div> --}}
 
 
 
@@ -272,19 +280,31 @@
                         <span class="btn btn-success btn-sm px-3" onclick="addMoreProductspecification()">+</span>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 px-5">
+                        <div class="col-md-6 px-5" id="specification_heading">
+                            <label for="product_specification_heading" class="form-label">Specification Heading</label>
+                            <select id="product_specification_heading" name="product_specification_heading[]"
+                                class="form-select">
+                                <option selected disabled>Please Select heading</option>
+                                @foreach ($product_specification_headings as $data)
+                                    <option value="{{ $data->name }}">{{ ucwords($data->name) }}</option>
+                                @endforeach
+
+
+                            </select>
+                        </div>
+
+
+                        <div class="col-md-6 px-5">
                             <label for="product_specfication" class="form-label">Name</label>
                             <input type="text" name="product_specification[]" class="form-control"
                                 id="product_specfication" autocomplete="off">
                         </div>
-                        <div class="col-md-9 px-5">
-                            <label for="product_specification_details" class="form-label">Detail</label>
-                            <div class="form-floating">
-                                <textarea class="form-control" name="product_specification_details[]" placeholder="Leave a comment here"
-                                    id="product_specification_details" style="height: 100px"></textarea>
-
-                            </div>
-
+                    </div>
+                    <div class="col-md-12 px-5">
+                        <label for="product_specification_details" class="form-label">Detail</label>
+                        <div class="form-floating">
+                            <textarea class="form-control" name="product_specification_details[]" placeholder="Leave a comment here"
+                                id="product_specification_details" style="height: 100px"></textarea>
 
                         </div>
 
@@ -292,9 +312,12 @@
                     </div>
 
 
+
+
+
                 </div>
 
-                <h4 class="mt-5">Discount Detail</h4>
+                {{-- <h4 class="mt-5">Discount Detail</h4>
                 <div class="col-md-12 card py-4" id="product_dicount_container">
                     <div class="col-md-12 px-5 d-flex justify-content-end">
                         <span class="btn btn-success btn-sm px-3" onclick="addMoreDiscount()">+</span>
@@ -336,7 +359,7 @@
                     </div>
 
 
-                </div>
+                </div> --}}
 
                 <h4 class="mt-5">Product Image</h4>
 
@@ -492,6 +515,8 @@
 
 
     <script>
+        var specification_heading = $("#specification_heading").html();
+
         function isset(variable) {
             return typeof variable !== 'undefined' && variable !== null;
         }
@@ -520,36 +545,54 @@
                 console.error(error);
             });
 
-        var product_other_expenditure_resaon;
-        ClassicEditor.create(
-                document.querySelector("#product_other_expenditure_resaon"), {
-                    ckfinder: {
-                        uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
-                    },
-                }
-            )
-            .then((newEditor) => {
-                product_other_expenditure_resaon = newEditor;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
 
-        var product_discount_detail;
 
-        ClassicEditor.create(document.querySelector("#product_discount_detail"), {
+        var product_warrenty;
+        ClassicEditor.create(document.querySelector("#product_warrenty"), {
                 ckfinder: {
                     uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
                 },
             })
             .then((newEditor) => {
-                product_discount_detail = newEditor;
+                product_warrenty = newEditor;
             })
             .catch((error) => {
                 console.error(error);
             });
 
-        var product_specification_details;
+        // var product_other_expenditure_resaon;
+        // ClassicEditor.create(
+        //         document.querySelector("#product_other_expenditure_resaon"), {
+        //             ckfinder: {
+        //                 uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+        //             },
+        //         }
+        //     )
+        //     .then((newEditor) => {
+        //         product_other_expenditure_resaon = newEditor;
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
+
+        // var product_discount_detail;
+
+        // ClassicEditor.create(document.querySelector("#product_discount_detail"), {
+        //         ckfinder: {
+        //             uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
+        //         },
+        //     })
+        //     .then((newEditor) => {
+        //         product_discount_detail = newEditor;
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
+
+        // var product_specification_details;
+
+
+
         ClassicEditor.create(document.querySelector("#product_specification_details"), {
                 ckfinder: {
                     uploadUrl: `{{ route('product-textarea-image-upload') . '?_token=' . csrf_token() }}`,
@@ -841,22 +884,27 @@
         function addMoreProductspecification() {
             productspecification++;
 
-            var specificationHTML = `  <div class="row" id="productspecfication${productspecification}">
-                        <div class="col-md-3 px-5">
+            var specificationHTML = `  <div class="row" id="productspecification${productspecification}">
+                           <div class="col-md-6 px-5 mt-5" id="specification_heading${productspecification}">
+                           ${specification_heading}
+                            </div>
+                          <div class="col-md-6 px-5 mt-5" >
+                          
                             <label for="product_specfication${productspecification}" class="form-label">Name</label>
                             <input type="text" name="product_specification[]" class="form-control"
                                 id="product_specfication${productspecification}" autocompvare="off">
                         </div>
-                        <div class="col-md-9 px-5">
+                        
+                        <div class="col-md-12 px-5">
                            
                             <label for="product_specification_details${productspecification}" class="form-label">Detail</label>
                             <div class="form-floating">
                             <textarea class="form-control" name="product_specification_details[]" placeholder="Leave a comment here"
                                 id="product_specification_details${productspecification}" style="height: 100px"></textarea>
                             </div>
-                        </div>
+                        
                         <div class="col-md-12 px-5 d-flex justify-content-end">
-                        <span class="btn btn-danger btn-sm px-3" onclick="removeElement('productspecfication${productspecification}')">-</span>
+                        <span class="btn btn-danger btn-sm px-3" onclick="removeElement('productspecification${productspecification}')">-</span>
                     </div>
                         
 
@@ -923,18 +971,18 @@
         function addOtherExpendureCost() {
             otherExpendureId++;
             var otherExpendureHTML = ` <div class="row" id="otherexpendurecost${otherExpendureId}">
-                        <div class="col-md-3 px-5">
+                        <div class="col-md-3 px-5 mt-5">
                             <label for="inputAddress" name="product_other_expenditure[]"
                                 class="form-label">Name</label>
                             <input type="text" class="form-control" id="" autocompvare="off">
                         </div>
-                        <div class="col-md-3 px-5">
+                        <div class="col-md-3 px-5 mt-5">
                             <label for="inputAddress" class="form-label">Price</label>
                             <input type="text" class="form-control" name="product_other_price[]" id=""
                                 autocompvare="off">
                         </div>
 
-                        <div class="col-md-3 px-5">
+                        <div class="col-md-3 px-5 mt-5">
                             <label for="inputAddress" class="form-label">Currency Type</label>
                             <select id="inputcurrency" name="product_other_expenditure_currency_type[]" class="form-select">
                                 <option selected disabled> Unit</option>
@@ -944,7 +992,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-9 px-5">
+                        <div class="col-md-9 px-5 mt-5">
                             <label for="inputAddress" class="form-label">Reason</label>
                             <div class="form-floating">
                                 <textarea class="form-control" id="product_other_expenditure_resaon${otherExpendureId}" name="product_other_expenditure_resaon[]" placeholder="Leave a comment here"
@@ -1023,30 +1071,31 @@
 
 
             formData.append("product_desc", product_desc.getData());
+            formData.append("product_warrenty", product_warrenty.getData());
 
-            formData.append(
-                "product_other_expenditure_resaon[0]",
-                product_other_expenditure_resaon.getData()
-            );
-            var otherExpendureCostTextareaLength = otherExpendureCostTextarea.length;
-            for (var i = 1; i <= otherExpendureCostTextareaLength; i++) {
-                formData.append(
-                    `product_other_expenditure_resaon[${i}]`,
-                    otherExpendureCostTextarea[i - 1].getData()
-                );
-            }
+            // formData.append(
+            //     "product_other_expenditure_resaon[0]",
+            //     product_other_expenditure_resaon.getData()
+            // );
+            // var otherExpendureCostTextareaLength = otherExpendureCostTextarea.length;
+            // for (var i = 1; i <= otherExpendureCostTextareaLength; i++) {
+            //     formData.append(
+            //         `product_other_expenditure_resaon[${i}]`,
+            //         otherExpendureCostTextarea[i - 1].getData()
+            //     );
+            // }
 
-            formData.append(
-                "product_discount_detail[0]",
-                product_discount_detail.getData()
-            );
-            var discounttextareacontainerLength = discounttextareacontainer.length;
-            for (var i = 1; i <= discounttextareacontainerLength; i++) {
-                formData.append(
-                    `product_discount_detail[${i}]`,
-                    discounttextareacontainer[i - 1].getData()
-                );
-            }
+            // formData.append(
+            //     "product_discount_detail[0]",
+            //     product_discount_detail.getData()
+            // );
+            // var discounttextareacontainerLength = discounttextareacontainer.length;
+            // for (var i = 1; i <= discounttextareacontainerLength; i++) {
+            //     formData.append(
+            //         `product_discount_detail[${i}]`,
+            //         discounttextareacontainer[i - 1].getData()
+            //     );
+            // }
 
 
 

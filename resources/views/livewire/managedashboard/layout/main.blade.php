@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/fontgoogleapis.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('fontawesome/font-awesome.w3.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/maps/style.css.map') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/adminstyle.css') }}">
@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('fontawesome/font-awesome.w3.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendorcss/ti-icons/css/themify-icons.css') }}">
 
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/toaster.min.css') }}">
 
 
 
