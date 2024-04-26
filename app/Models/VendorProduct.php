@@ -15,14 +15,17 @@ class VendorProduct extends Model
         'product_category_id',
         'product_title',
         'brand_id', 
-        'product_quanty',
+        'product_total_stock_quantity',
         'discription',
         'product_warrenty',
-        'measurement_parameter_name',
-        'measurement_unit_name',
-        'product_mesurment_quantity',
-        'product_quantity_price',
+        'measurment_parameter_name',
+        'measurment_unit_name',
+        'product_measurment_quantity',
+        'product_measurment_quantity_price',
         'product_currency_type',
+        'product_stock_quantity',
+        'product_color',
+        'product_color_stock',
         'product_other_expenditure_cost',
         'product_other_expenditure_currency_type',
         'product_other_expenditure_resaon',
@@ -43,4 +46,29 @@ class VendorProduct extends Model
 
 
     ];
+
+    public static function getProductTitleIdIndexedArray()
+    {
+      $records = self::all();
+      $nameIdArr = [];
+      foreach ($records as $record) {
+        $nameIdArr[strtolower($record->product_title)] = $record->id;
+      }
+      return $nameIdArr;
+    }
+
+
+    public static function getBranIdIndexedArray()
+    {
+      $records = self::all();
+      $nameIdArr = [];
+      foreach ($records as $record) {
+        $nameIdArr[strtolower($record->product_title)] = $record->brand_id;
+      }
+      return $nameIdArr;
+    }
+
+
+
+
 }

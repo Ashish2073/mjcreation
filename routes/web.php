@@ -57,3 +57,6 @@ Route::post('vendors/product-textarea-image-upload',[ProductController::class,'t
 Route::get('import/bulkproduct',[ProductController::class,'bulkimport'])->name('bulk.import');
 Route::post('import/product',[ProductController::class,'importproductdata'])->name('import.product.data');
 
+Route::post('import/productspecification',[ProductController::class,'importproductspecificationdata'])->name('import.product.specification.data');
+
+Route::post('import/productprimarycost',[ProductController::class,'importproductprimarycostdata'])->name('import.product.primary.cost.data');

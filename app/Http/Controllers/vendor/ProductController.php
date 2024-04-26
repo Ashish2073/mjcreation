@@ -10,6 +10,8 @@ use App\Models\VendorProduct;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\VendorProductImport;
 use App\Models\Productspecficationheading;
+use App\Imports\ProductSpecificationImport;
+use App\Imports\ProductPrimaryCostImport;
 
 class ProductController extends Controller
 {
@@ -80,30 +82,35 @@ class ProductController extends Controller
         $vendorProduct->product_category_id=$request->product_category[count($request->product_category)-1];
         $vendorProduct->product_title=$request->product_title;
         $vendorProduct->brand_id=2;
-        $vendorProduct->product_quantity=$request->product_quantity;
+        $vendorProduct->product_total_stock_quantity=$request->product_quantity;
         $vendorProduct->discription=$request->product_desc;
         $vendorProduct->product_warrenty=$request->product_warrenty;
 
 
-        $vendorProduct->measurement_parameter_name=$request->product_mesurment_parameter;
+        $vendorProduct->measurment_parameter_name=$request->product_mesurment_parameter;
        
-        $vendorProduct->measurement_unit_name=$request->product_mesurment_unit;
+        $vendorProduct->measurment_unit_name=$request->product_mesurment_unit;
 
 
 
-        $vendorProduct->product_mesurment_quantity=(isset($request->product_mesurment_quantity[0]))?json_encode($request->product_mesurment_quantity):Null;
+        $vendorProduct->product_measurment_quantity=(isset($request->product_measurment_quantity[0]))?json_encode($request->product_measurment_quantity):NUll;
 
-        $vendorProduct->product_quantity_price=(isset($request->product_quantity_price))?json_encode($request->product_quantity_price): Null;
+        $vendorProduct->product_quantity_price=(isset($request->product_measurment_quantity_price[0]))?json_encode($request->product_measurment_quantity_price): NUll;
 
-        $vendorProduct->product_currency_type=(isset($request->product_currency_type))?json_encode($request->product_currency_type):Null;
+        $vendorProduct->product_currency_type=(isset($request->product_currency_type[0]))?json_encode($request->product_currency_type):NUll;
 
-        // $vendorProduct->product_other_expenditure_cost=json_encode($request->product_other_price) ?? Null;
+        $vendorProduct->product_stock_quantity=(isset($request->product_stock_quantity[0]))?json_encode($request->product_stock_quantity):NULL;
+       
+        $vendorProduct->product_color=(isset($request->product_color[0]))?json_encode($request->product_color):NULL;
+        $vendorProduct->product_color_stock=(isset($request->product_color_stock[0]))?json_encode($request->product_color_stock):NULL;
+
+        // product_color_stock $vendorProduct->product_other_expenditure_cost=json_encode($request->product_other_price) ?? Null;
 
         // $vendorProduct->product_other_expenditure_resaon=json_encode($request->product_other_expenditure_resaon)??Null;
-
+    
         // $vendorProduct->product_other_expenditure_currency_type=json_encode($request->product_other_expenditure_currency_type)??Null;
 
-        $vendorProduct->product_specification_heading=isset($request->product_specification_heading[0])?json_encode($request->product_specfication_heading):Null;
+        $vendorProduct->product_specification_heading=isset($request->product_specification_heading[0])?json_encode($request->product_specification_heading):Null;
         $vendorProduct->product_specification=json_encode($request->product_specification) ?? Null;
 
         $vendorProduct->product_specification_details=json_encode($request->product_specification_details) ?? Null;
@@ -247,7 +254,7 @@ class ProductController extends Controller
         return view('vendors.products.import');
 
     }
-
+ 
     public function importproductdata(Request $request){
     
         $request->validate([
@@ -256,10 +263,39 @@ class ProductController extends Controller
    
         $productImport = new VendorProductImport();
         Excel::import($productImport, $request->file('import_product_file'));
-
-        // dd($productImport->response); 
+ 
+        // dd($productImport->response);  
                  
         return response()->json($productImport->response);
+    }
+
+    public function importproductspecificationdata(Request $request){
+        $request->validate([
+            'import_product_specification_file' => 'required|max:2048', 
+        ]);
+   
+        $productImport = new ProductSpecificationImport();
+        Excel::import($productImport, $request->file('import_product_specification_file'));
+ 
+        // dd($productImport->response);  
+                 
+        return response()->json($productImport->response);
+
+    }
+
+
+    public function importproductprimarycostdata(Request $request){
+        $request->validate([
+            'import_product_primary_cost_data_file' => 'required|max:2048', 
+        ]);
+   
+        $productImport = new ProductPrimaryCostImport();
+        Excel::import($productImport, $request->file('import_product_primary_cost_data_file'));
+ 
+        // dd($productImport->response);  
+                 
+        return response()->json($productImport->response);
+
     }
 
 

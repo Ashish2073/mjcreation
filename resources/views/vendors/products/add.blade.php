@@ -174,7 +174,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter</label>
-                            <select id="inputState" name="product_mesurment_parameter" class="form-select">
+                            <select id="inputState" name="product_measurment_parameter" class="form-select">
                                 <option selected disabled> Please Select Parameter</option>
                                 <option value="length">Length</option>
                                 <option value="weight">Weight</option>
@@ -183,7 +183,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Product Measurment Parameter Unit</label>
-                            <select id="inputState" name="product_mesurment_unit" class="form-select">
+                            <select id="inputState" name="product_measurment_unit" class="form-select">
                                 <option selected disabled> Unit</option>
                                 <option value="m">Meter</option>
                                 <option value="gm">Gm</option>
@@ -201,17 +201,22 @@
 
                                 <div class="row">
                                     <div class="col-md-3 py-3">
-                                        <label for="inputAddress" id="product_mesurment_quantity" class="form-label">Product
+                                        <label for="inputAddress" id="product_measurment_quantity"
+                                            class="form-label">Product
                                             Measurment Quantity</label>
-                                        <input type="number" name="product_mesurment_quantity[]" class="form-control"
-                                            id="product_mesurment_quantity" autocomplete="off">
+                                        <input type="number" name="product_measurment_quantity[]" class="form-control"
+                                            id="product_measurment_quantity" autocomplete="off">
                                     </div>
                                     <div class="col-md-3 py-3">
-                                        <label for="inputAddress" id="product_mesurment_quantity"
+                                        <label for="inputAddress" id="product_measurment_quantity"
                                             class="form-label">Price(MRP)</label>
-                                        <input type="number" name="product_quantity_price[]" class="form-control"
-                                            id="" autocomplete="off">
+                                        <input type="number" name="product_measurment_quantity_price[]"
+                                            class="form-control" id="" autocomplete="off">
                                     </div>
+
+
+
+
                                     <div class="col-md-3 py-3">
                                         <label for="inputcurrency" class="form-label">Currency Type</label>
                                         <select id="inputcurrency" name="product_currency_type[]" class="form-select">
@@ -221,7 +226,20 @@
 
                                         </select>
                                     </div>
+
+                                    <div class="col-md-3 py-3">
+                                        <label for="product_stock_quantity" class="form-label">Product Stock
+                                            Quantity</label>
+                                        <input type="number" name="product_stock_quantity[]" class="form-control"
+                                            id="product_stock_quantity" autocompvare="off">
+                                    </div>
+
+
+
+
+
                                 </div>
+
                             </div>
 
                         </div>
@@ -449,6 +467,18 @@
                                 </div>
 
 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 py-3">
+                                <label for="product_color" class="form-label">Product color</label>
+                                <input type="text" name="product_color[]" class="form-control" id="product_color"
+                                    autocompvare="off">
+                            </div>
+                            <div class="col-md-3 py-3">
+                                <label for="product_color_stock" class="form-label">Product color Stock</label>
+                                <input type="number" name="product_color_stock[]" class="form-control"
+                                    id="product_color_stock" autocompvare="off">
                             </div>
                         </div>
                     </div>
@@ -714,16 +744,32 @@
                                                            <div class="form">
                                                            <div class="grid">
                                                             <div class="form-element" onclick=" previewBeforeUpload('file-color-banner${addMoreImagefordiffentcolorContainerId}')">
-                                                      <input type="file" name="product_color_banner_image[]" id="file-color-banner${addMoreImagefordiffentcolorContainerId}"   accept="image/*">
-                                                     <label for="file-color-banner${addMoreImagefordiffentcolorContainerId}" id="file-color-banner${addMoreImagefordiffentcolorContainerId}-preview">
-                                                     <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
-                                                       <div>
-                                                    <span>+</span>
-                                                   </div>
-                                                   </label>
+                                                                  <input type="file" name="product_color_banner_image[]" id="file-color-banner${addMoreImagefordiffentcolorContainerId}"   accept="image/*">
+                                                                <label for="file-color-banner${addMoreImagefordiffentcolorContainerId}" id="file-color-banner${addMoreImagefordiffentcolorContainerId}-preview">
+                                                                 <img src="{{ asset('img/imagepreviewupload.jpg') }}" alt="">
+                                                                  <div>
+                                                                  <span>+</span>
+                                                              </div>
+                                                             </label>
                                                  </div>
                                                  </div>
                                              </div>
+                                             <div class="row">
+                                             <div class="col-md-3 py-3">
+                                                 <label for="product_color${addMoreImagefordiffentcolorContainerId}" class="form-label">Product color</label>
+                                              <input type="text" name="product_color[]" class="form-control"
+                                            id="product_color${addMoreImagefordiffentcolorContainerId}" autocompvare="off">
+                                           </div>
+
+                                           <div class="col-md-3 py-3">
+                                                 <label for="product_color_stock${addMoreImagefordiffentcolorContainerId}" class="form-label">Product color</label>
+                                              <input type="number" name="product_color_stock[]" class="form-control"
+                                            id="product_color_stock${addMoreImagefordiffentcolorContainerId}" autocompvare="off">
+                                           </div>
+                                           </div>
+
+
+
                                         </div>
                                      <div class="col-md-12 px-5 d-flex justify-content-end">
                                       <span class="btn btn-success btn-sm px-3" id="" onclick="addMoreColorImage(${addMoreImagefordiffentcolorContainerId})">+</span>
@@ -936,16 +982,17 @@
 
             var productpricedetailHTML = `  <div class="row" id="productpricecontainer${productpricedetailId}">
                         <div class="col-md-3 py-3">
-                            <label for="product_mesurment_quantity${productpricedetailId}" 
+                            <label for="product_measurment_quantity${productpricedetailId}" 
                                 class="form-label">Product
                                 Measurment Quantity</label>
-                            <input type="text" name="product_mesurment_quantity[]" class="form-control" id="product_mesurment_quantity${productpricedetailId}" autocompvare="off">
+                            <input type="number" name="product_measurment_quantity[]" class="form-control" id="product_measurment_quantity${productpricedetailId}" autocompvare="off">
                         </div>
                         <div class="col-md-3 py-3">
-                            <label for="product_quantity_price${productpricedetailId}" 
+                            <label for="product_measurment_quantity_price${productpricedetailId}" 
                                 class="form-label">Price(MRP)</label>
-                            <input type="text" name="product_quantity_price[]"  class="form-control" id="product_quantity_price${productpricedetailId}" autocompvare="off">
+                            <input type="number" name="product_measurment_quantity_price[]"  class="form-control" id="product_measurment_quantity_price${productpricedetailId}" autocompvare="off">
                         </div>
+                       
                         <div class="col-md-3 py-3">
                             <label for="product_currency_type${productpricedetailId}" class="form-label">Currency Type</label>
                             <select id="product_currency_type${productpricedetailId}" name="product_currency_type[]" class="form-select">
@@ -955,6 +1002,14 @@
 
                             </select>
                         </div>
+
+                        <div class="col-md-3 py-3">
+                            <label for="product_stock_quantity${productpricedetailId}" 
+                                class="form-label">Product Stock Quantity</label>
+                            <input type="number" name="product_stock_quantity[]"  class="form-control" id="product_stock_quantity${productpricedetailId}" autocompvare="off">
+                        </div>
+
+                                   
                         <div class="col-md-12 px-5 d-flex justify-content-end">
                         <span class="btn btn-danger btn-sm px-3" onclick="removeElement('productpricecontainer${productpricedetailId}')">-</span>
                     </div>

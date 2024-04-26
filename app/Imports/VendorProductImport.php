@@ -295,11 +295,7 @@ class VendorProductImport implements ToCollection, WithHeadingRow
     {
         return 100;
     }
-    public function getSheetErrors()
-    {
-        return $this->response;
-    }
-    
+   
 
 
 }
